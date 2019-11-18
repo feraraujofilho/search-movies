@@ -15,12 +15,18 @@ const flash      = require("connect-flash");
     
 
 mongoose
-  .connect(`mongodb://${process.env.DATABASE_CONNECTION}/NetflixSearch` , {useNewUrlParser: true})
+  .connect(
+    `mongodb://${process.env.DATABASE_CONNECTION}/NetflixSearch` ||
+      "mongodb://heroku_mhtrzgcn:243qkku7e0kvdr2vdvf6vl2q3f@ds039088.mlab.com:39088/heroku_mhtrzgcn",
+    { useNewUrlParser: true }
+  )
   .then(x => {
-    console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
+    console.log(
+      `Connected to Mongo! Database name: "${x.connections[0].name}"`
+    );
   })
   .catch(err => {
-    console.error('Error connecting to mongo', err)
+    console.error("Error connecting to mongo", err);
   });
 
 const app_name = require('./package.json').name;
