@@ -20,6 +20,7 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
+const FacebookStrategy = require("passport-facebook").Strategy;
 const User = require("./models/User");
 const bcrypt = require("bcrypt");
 
@@ -148,38 +149,53 @@ passport.use(
   })
 );
 
+// facebook strategy --> auth with passport
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    callbackURL: "http://localhost:3030/auth/facebook/callback"
+  },
+  function (profile, cb) {
+    User.findOrCreate({
+      facebookId: profile.id
+    }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
+
 // google strategy --> auth with passport
-passport.use(
-  new GoogleStrategy({
-      clientID: process.env.GOOGLE_CLIENT_ID, //not registered yet
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET, //not registered yet
-      callbackURL: "http://localhost:3030/auth/google/callback" //not registered yet
-    },
-    (request, accessToken, refreshToken, profile, done) => {
-      User.findOne({
-          googleId: profile.id
-        })
-        // if user found
-        .then(user => {
-          if (user) {
-            // log in user
-            done(null, user);
-          } else {
-            // create as new user
-            User.create({
-              googleId: profile.id
-            }).then(createdUser => {
-              // log the new user in
-              done(null, createdUser);
-            });
-          }
-        })
-        .catch(err => {
-          done(err);
-        });
-    }
-  )
-);
+// passport.use(
+//   new GoogleStrategy({
+//       clientID: process.env.GOOGLE_CLIENT_ID, //not registered yet
+//       clientSecret: process.env.GOOGLE_CLIENT_SECRET, //not registered yet
+//       callbackURL: "http://localhost:3030/auth/google/callback" //not registered yet
+//     },
+//     (request, accessToken, refreshToken, profile, done) => {
+//       User.findOne({
+//           googleId: profile.id
+//         })
+//         // if user found
+//         .then(user => {
+//           if (user) {
+//             // log in user
+//             done(null, user);
+//           } else {
+//             // create as new user
+//             User.create({
+//               googleId: profile.id
+//             }).then(createdUser => {
+//               // log the new user in
+//               done(null, createdUser);
+//             });
+//           }
+//         })
+//         .catch(err => {
+//           done(err);
+//         });
+//     }
+//   )
+// );
 
 /* -------------------------------------------- */
 

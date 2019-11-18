@@ -79,12 +79,19 @@ router.post(
   })
 );
 
-// // login facebook
-// router.get('/facebook', passport.authenticate('facebook'));
+// login facebook
+router.get("/auth/facebook", passport.authenticate("facebook"));
 
-// router.get('/facebook/callback', passport.authenticate(
-// //
-// ))
+router.get(
+  "/auth/facebook/callback",
+  passport.authenticate("facebook", {
+    failureRedirect: "/login"
+  }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect("/");
+  }
+);
 
 // login google
 // app.get(
@@ -106,10 +113,9 @@ router.post(
 
 // logout
 router.get("/logout", (req, res, next) => {
-  req.logout();
+  //req.logout();
+  req.session.destroy();
   res.redirect("/");
 });
-
-
 
 module.exports = router;
