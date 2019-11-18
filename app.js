@@ -19,7 +19,7 @@ const flash = require("connect-flash");
 //auth
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
-const GoogleStrategy = require("passport-google-oauth2").Strategy;
+//const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const User = require("./models/User");
 const bcrypt = require("bcrypt");
@@ -29,9 +29,11 @@ const bcrypt = require("bcrypt");
 // CONNECT TO DATABASE
 
 mongoose
-  .connect(`mongodb://${process.env.DATABASE_CONNECTION}/NetflixSearch`, {
-    useNewUrlParser: true
-  })
+  .connect(
+    `mongodb://${process.env.DATABASE_CONNECTION}/NetflixSearch` ||
+      "mongodb://heroku_mhtrzgcn:243qkku7e0kvdr2vdvf6vl2q3f@ds039088.mlab.com:39088/heroku_mhtrzgcn",
+    { useNewUrlParser: true }
+  )
   .then(x => {
     console.log(
       `Connected to Mongo! Database name: "${x.connections[0].name}"`
