@@ -19,7 +19,7 @@ const flash = require("connect-flash");
 //auth
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
-const GoogleStrategy = require("passport-google-oauth2").Strategy;
+//const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const User = require("./models/User");
 const bcrypt = require("bcrypt");
