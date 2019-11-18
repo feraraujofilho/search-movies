@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const getBitPrices = array => {
+const getBitPrices = async array => {
   let syear = 1990; // start year;
   let eyear = 2019; // end year
   let snfrate = 0; // start Netflix rating
@@ -22,7 +22,7 @@ const getBitPrices = array => {
   let sortby = "Rating"; // Sort Results by: Relevance, Date, Rating, Title, VideoType, FilmYear, Runtime
   let page = 1; // Results come in groups of 100. Update this number to page through them.
   //let downloadable = {downloadable}
-  axios({
+  return await axios({
     method: "GET",
     url: "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi",
     headers: {
@@ -42,11 +42,11 @@ const getBitPrices = array => {
       sa: "and"
     }
   })
-    .then(response => {
+    .then(async response => {
       console.log(response.headers["x-ratelimit-requests-remaining"]);
-      // console.log(response.data);
+      //console.log(response.data);
       // res.json(response.data)
-      return response.data;
+      return await response.data;
     })
     .catch(error => {
       console.log("HALLO  ", error);
