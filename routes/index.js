@@ -3,13 +3,25 @@ const router = express.Router();
 const Genre = require("../models/Genres");
 const getBitPrices = require("../public/javascripts/NetflixAPI");
 
+const loginCheck = () => {
+  return (req, res, next) => {
+    if (req.user) {
+      next();
+    } else {
+      res.redirect("/");
+    }
+  };
+};
+
 /* GET home page */
 router.get("/", (req, res, next) => {
-  res.render("index");
+  res.render("index", {
+    loggedIn: req.user
+  });
 });
 
 // get user profile page
-router.get("/profile", (req, res, next) => {
+router.get("/profile", loginCheck(), (req, res, next) => {
   res.render("user-profile.hbs");
 });
 
@@ -35,14 +47,5 @@ router.post("/movies/search", async (req, res, next) => {
       console.log(err);
     });
 });
-const loginCheck = () => {
-  return (req, res, next) => {
-    if (req.user) {
-      next();
-    } else {
-      res.redirect("/");
-    }
-  };
-};
 
 module.exports = router;
