@@ -1,12 +1,16 @@
-<section>
+<form action="/movies/search/results" method="post">
+
   <p>Select Categories</p>
-  <select multiple="multiple" class="genres" id="myMulti">
-    <option value="0">Action</option>
-    <option value="1">Comedy</option>
-    <option value="2">Drama</option>
-    <option value="3">Horror</option>
-    <option value="4">Romantic</option>
+  <select multiple="multiple" class="genres" id="myMulti" name="genre">
+    <option value="All Action">Action</option>
+    <option value="All Comedies">Comedy</option>
+    <option value="All Dramas">Drama</option>
+    <option value="All Horrors">Horror</option>
+    <option value="All Romantics">Romantic</option>
 
   </select>
   <button type="submit">Search</button>
-</section>
+</form>
+
+
+<script src="/javascripts/NetflixAPI.js" charset="utf-8"></script>
