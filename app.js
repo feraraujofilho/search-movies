@@ -19,7 +19,7 @@ const flash = require("connect-flash");
 //auth
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
-const GoogleStrategy = require("passport-google-oauth2").Strategy;
+//const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const User = require("./models/User");
 const bcrypt = require("bcrypt");
 
@@ -149,7 +149,7 @@ passport.use(
 );
 
 // google strategy --> auth with passport
-passport.use(
+/* passport.use(
   new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID, //not registered yet
       clientSecret: process.env.GOOGLE_CLIENT_SECRET, //not registered yet
@@ -180,7 +180,7 @@ passport.use(
     }
   )
 );
-
+ */
 /* -------------------------------------------- */
 
 // REGISTER ROUTES
