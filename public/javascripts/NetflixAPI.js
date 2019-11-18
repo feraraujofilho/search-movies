@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const getBitPrices = async array => {
+const getBitPrices = array => {
   let syear = 1990; // start year;
   let eyear = 2019; // end year
   let snfrate = 0; // start Netflix rating
@@ -22,7 +22,7 @@ const getBitPrices = async array => {
   let sortby = "Rating"; // Sort Results by: Relevance, Date, Rating, Title, VideoType, FilmYear, Runtime
   let page = 1; // Results come in groups of 100. Update this number to page through them.
   //let downloadable = {downloadable}
-  return await axios({
+  return axios({
     method: "GET",
     url: "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi",
     headers: {
@@ -42,16 +42,38 @@ const getBitPrices = async array => {
       sa: "and"
     }
   })
-    .then(async response => {
+    .then(response => {
       console.log(response.headers["x-ratelimit-requests-remaining"]);
       //console.log(response.data);
       // res.json(response.data)
-      return await response.data;
+      return response.data.ITEMS;
     })
     .catch(error => {
       console.log("HALLO  ", error);
     });
 };
+
+function findMovieById (id){
+   axios({
+     method: "GET",
+     url: "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi",
+     headers: {
+       "content-type": "application/octet-stream",
+       "x-rapidapi-host": "unogs-unogs-v1.p.rapidapi.com",
+       "x-rapidapi-key": process.env.NETFLIX_KEY
+     },
+     params: {
+       t: "loadvideo",
+       q: id
+     }
+   })
+     .then(response => {
+       console.log(response);
+     })
+     .catch(error => {
+       console.log(error);
+     });
+}
 
 module.exports = getBitPrices;
 

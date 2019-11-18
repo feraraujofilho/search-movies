@@ -18,15 +18,16 @@ router.get("/movies/search", (req, res, next) => {
   res.render("moviesSearch");
 });
 
-router.post("/movies/search", async (req, res, next) => {
+router.post("/movies/search", (req, res, next) => {
   //res.send(req.body);
   const selectedgenre = req.body.genre;
   Genre.find({ genre: { $in: selectedgenre } })
     .then(async response => {
       const genresID = response[0].genreIds;
-      const svenja = await getBitPrices(genresID);
-      console.log("AWAIIIITED ", svenja);
-      res.send(svenja);
+
+      const getMovies = await getBitPrices(genresID);
+      console.log("AWAIIIITED ", getMovies);
+      res.render("movieDetails", {movie: getMovies[0]});
     })
     .catch(err => {
       console.log(err);
@@ -46,5 +47,6 @@ const loginCheck = () => {
 router.get("/movies/details", (req,res,next) =>{
   res.render("movieDetails")
 })
+
 
 module.exports = router;

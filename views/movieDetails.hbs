@@ -1,12 +1,12 @@
-<h1>Pulp Fiction</h1>
+{{!-- <h1>Pulp Fiction</h1>
 <p>Quentin Tarantino&#39;s stylized crime caper weaves together stories featuring a burger-loving hit man, his
 philosophical partner and a washed-up boxer.</p>
-<img src="http://cdn1.nflximg.net/images/4481/12144481.jpg" alt="teste">
+<img src="http://cdn1.nflximg.net/images/4481/12144481.jpg" alt="teste"> --}}
 
 {{#with movie}}
 <h1>{{title}}</h1>
 <p>{{synopsis}}</p>
-<img src={{largeimage}} alt={{title}}>
+<img src={{image}} onerror={{largeimage}} alt={{title}}>
 {{/with}}
 
 {{!-- netflixid: "880640",
