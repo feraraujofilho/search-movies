@@ -1,5 +1,6 @@
-const getBitPrices = (array) => {
+const axios = require("axios");
 
+const getBitPrices = array => {
   let syear = 1990; // start year;
   let eyear = 2019; // end year
   let snfrate = 0; // start Netflix rating
@@ -27,7 +28,7 @@ const getBitPrices = (array) => {
     headers: {
       "content-type": "application/octet-stream",
       "x-rapidapi-host": "unogs-unogs-v1.p.rapidapi.com",
-      "x-rapidapi-key": "a" //process.env.NETFLIX_KEY
+      "x-rapidapi-key": process.env.NETFLIX_KEY
     },
     params: {
       q:
@@ -43,12 +44,16 @@ const getBitPrices = (array) => {
   })
     .then(response => {
       console.log(response.headers["x-ratelimit-requests-remaining"]);
-      console.log(response);
+      // console.log(response.data);
+      // res.json(response.data)
+      return response.data;
     })
     .catch(error => {
-      console.log(error);
+      console.log("HALLO  ", error);
     });
 };
+
+module.exports = getBitPrices;
 
 /* document.querySelector("button").onclick = () => {
   getBitPrices();
