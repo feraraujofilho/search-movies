@@ -8,6 +8,11 @@ router.get("/", (req, res, next) => {
   res.render("index");
 });
 
+// get user profile page
+router.get("/profile", (req, res, next) => {
+  res.render("user-profile.hbs");
+});
+
 /* GET movies search */
 router.get("/movies/search", (req, res, next) => {
   res.render("moviesSearch");
@@ -30,5 +35,14 @@ router.post("/movies/search", async (req, res, next) => {
       console.log(err);
     });
 });
+const loginCheck = () => {
+  return (req, res, next) => {
+    if (req.user) {
+      next();
+    } else {
+      res.redirect("/");
+    }
+  };
+};
 
 module.exports = router;
