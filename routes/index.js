@@ -8,6 +8,11 @@ router.get("/", (req, res, next) => {
   res.render("index");
 });
 
+// get user profile page
+router.get("/profile", (req, res, next) => {
+  res.render("user-profile.hbs");
+});
+
 /* GET movies search */
 router.get("/movies/search", (req, res, next) => {
   res.render("moviesSearch");
@@ -39,8 +44,5 @@ const loginCheck = () => {
     }
   };
 };
-
-
-
 
 module.exports = router;
