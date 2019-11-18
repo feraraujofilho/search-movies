@@ -1,63 +1,115 @@
 const express = require("express");
-const passport = require('passport');
-const router = express.Router();
-const User = require("../models/User");
-
-// Bcrypt to encrypt passwords
 const bcrypt = require("bcrypt");
-const bcryptSalt = 10;
+const User = require("../models/User");
+const router = express.Router();
+const passport = require("passport");
 
+/* -------------------------------------------- */
 
-router.get("/login", (req, res, next) => {
-  res.render("auth/login", { "message": req.flash("error") });
-});
-
-router.post("/login", passport.authenticate("local", {
-  successRedirect: "/",
-  failureRedirect: "/auth/login",
-  failureFlash: true,
-  passReqToCallback: true
-}));
+// signup
 
 router.get("/signup", (req, res, next) => {
-  res.render("auth/signup");
+  res.render("auth/signup.hbs");
 });
 
 router.post("/signup", (req, res, next) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  if (username === "" || password === "") {
-    res.render("auth/signup", { message: "Indicate username and password" });
+  const { username, password } = req.body;
+  // restriction checks
+  if (!username) {
+    res.render("auth/signup.hbs", {
+      message: "Please enter a username"
+    });
     return;
   }
-
-  User.findOne({ username }, "username", (err, user) => {
-    if (user !== null) {
-      res.render("auth/signup", { message: "The username already exists" });
-      return;
-    }
-
-    const salt = bcrypt.genSaltSync(bcryptSalt);
-    const hashPass = bcrypt.hashSync(password, salt);
-
-    const newUser = new User({
-      username,
-      password: hashPass
+  if (password.length < 8) {
+    res.render("auth/signup.hbs", {
+      message: "Password must have min. 8 characters"
     });
-
-    newUser.save()
-    .then(() => {
-      res.redirect("/");
-    })
-    .catch(err => {
-      res.render("auth/signup", { message: "Something went wrong" });
-    })
+    return;
+  }
+  User.findOne({
+    username
+  }).then(match => {
+    if (match) {
+      res.render("auth/signup.hbs", {
+        message: "This username is already taken"
+      });
+      return;
+    } else {
+      // encrypt password
+      bcrypt
+        .genSalt()
+        .then(salt => {
+          return bcrypt.hash(password, salt);
+        })
+        .then(hash => {
+          // create new user in db
+          return User.create({
+            username: username,
+            password: hash
+          });
+        })
+        .then(signedUpUser => {
+          // log in new user with passport
+          req.login(signedUpUser, err => {
+            if (err) {
+              next(err);
+            } else {
+              res.redirect("/");
+            }
+          });
+        });
+    }
   });
 });
 
-router.get("/logout", (req, res) => {
+/* -------------------------------------------- */
+
+// login local
+router.get("/login", (req, res, next) => {
+  res.render("auth/login.hbs");
+});
+
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/auth/login",
+    failureFlash: true
+  })
+);
+
+// // login facebook
+// router.get('/facebook', passport.authenticate('facebook'));
+
+// router.get('/facebook/callback', passport.authenticate(
+// //
+// ))
+
+// login google
+// app.get(
+//   '/google',
+//   passport.authenticate('google', {
+//     scope: ['profile']
+//   })
+// );
+
+// app.get(
+//   '/google/callback',
+//   passport.authenticate('google', {
+//     successRedirect: '/',
+//     failureRedirect: '/auth/login'
+//   })
+// );
+
+/* -------------------------------------------- */
+
+// logout
+router.get("/logout", (req, res, next) => {
   req.logout();
   res.redirect("/");
 });
+
+
 
 module.exports = router;
