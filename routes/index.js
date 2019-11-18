@@ -24,9 +24,6 @@ router.post("/movies/search", async (req, res, next) => {
   Genre.find({ genre: { $in: selectedgenre } })
     .then(async response => {
       const genresID = response[0].genreIds;
-
-      // const something = await getBitPrices(genresID);
-      // console.log("ASDKlnfdskdsfn ", something);
       const svenja = await getBitPrices(genresID);
       console.log("AWAIIIITED ", svenja);
       res.send(svenja);
@@ -35,6 +32,7 @@ router.post("/movies/search", async (req, res, next) => {
       console.log(err);
     });
 });
+
 const loginCheck = () => {
   return (req, res, next) => {
     if (req.user) {
@@ -44,5 +42,9 @@ const loginCheck = () => {
     }
   };
 };
+
+router.get("/movies/details", (req,res,next) =>{
+  res.render("movieDetails")
+})
 
 module.exports = router;
