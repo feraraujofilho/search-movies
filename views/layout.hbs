@@ -26,21 +26,26 @@
         <li class="nav-item">
           <a class="nav-link" href="/">Home</a>
         </li>
+        {{#if loggedIn}}
         <li class="nav-item">
           <a class="nav-link" href="/profile">Profile</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/movies/search">Search movies</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/auth/logout">Log Out</a>
+        </li>
+        {{else}}
         <li class="nav-item">
           <a class="nav-link" href="/auth/signup">Sign Up</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/auth/login">Log In</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/auth/logout">Log Out</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/movies/search">Search movies</a>
-        </li>
+        {{/if}}
+
+
       </ul>
     </div>
   </div>

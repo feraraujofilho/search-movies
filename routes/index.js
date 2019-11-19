@@ -7,10 +7,10 @@ const NetflixAPI = require("../public/javascripts/NetflixAPI");
 const loginCheck = () => {
   return (req, res, next) => {
     if (req.user) {
-      console.log("login check passed")
+      console.log("login check passed");
       next();
     } else {
-      console.log("login check failed")
+      console.log("login check failed");
       res.redirect("/");
     }
   };
@@ -25,30 +25,38 @@ router.get("/", (req, res, next) => {
 
 // get user profile page
 router.get("/profile/", loginCheck(), (req, res, next) => {
-  console.log(req.user)
-  res.render('user-profile.hbs', {
+  console.log(req.user);
+  res.render("user-profile.hbs", {
+    loggedIn: req.user,
     user: req.user
-  })
+  });
 });
 
 /* GET movies search */
 router.get("/movies/search", (req, res, next) => {
-  res.render("moviesSearch");
+  res.render("moviesSearch", { loggedIn: req.user });
 });
 
 router.post("/movies/search", (req, res, next) => {
   const selectedgenre = req.body.genre;
   Genre.find({
-      genre: {
-        $in: selectedgenre
-      }
-    })
+    genre: {
+      $in: selectedgenre
+    }
+  })
     .then(async response => {
-      console.log(response[0]);
-      const genresID = response[0].genreIds;
+      console.log(response);
+      const genresID = response
+        .map(value => {
+          return value.genreIds;
+        })
+        .reduce(function(a, b) {
+          return a.concat(b);
+        }, []);
+      console.log(genresID);
 
       const getMovies = await NetflixAPI.getSuggestions(genresID);
-      res.render("movieDetailsRoulette", { movie: getMovies })
+      res.render("movieDetailsRoulette", { movie: getMovies });
       //res.redirect(`/movies/details/${getMovies[0].netflixid}`);
     })
     .catch(err => {
@@ -56,12 +64,12 @@ router.post("/movies/search", (req, res, next) => {
     });
 });
 
-
 router.get("/movies/details/:id", async (req, res, next) => {
   try {
     const singleMovie = await NetflixAPI.findMovieById(req.params.id);
-    console.log(singleMovie)
+    console.log(singleMovie);
     res.render("movieDetails", {
+      loggedIn: req.user,
       movie: singleMovie
     });
   } catch (err) {
