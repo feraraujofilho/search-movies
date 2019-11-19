@@ -26,7 +26,7 @@ router.post("/movies/search", (req, res, next) => {
       console.log(response)
       const genresID = response[0].genreIds;
 
-      //const getMovies = await getBitPrices(genresID);
+      const getMovies = await getBitPrices(genresID);
       console.log("AWAIIIITED ", getMovies);
       res.render("movieDetails", {movie: getMovies[0]});
     })
