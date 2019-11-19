@@ -23,25 +23,24 @@ const getSuggestions = array => {
   let page = 1; // Results come in groups of 100. Update this number to page through them.
   //let downloadable = {downloadable}
   return axios({
-    method: "GET",
-    url: "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi",
-    headers: {
-      "content-type": "application/octet-stream",
-      "x-rapidapi-host": "unogs-unogs-v1.p.rapidapi.com",
-      "x-rapidapi-key": process.env.NETFLIX_KEY
-    },
-    params: {
-      q:
-        `-!${syear},${eyear}-!${snfrate},${enfrate}-!${simdbrate},${eimdbrate}-!${genreString}-!${vtype}-!${audio}-!${subtitle}-!${imdbvotes}` +
-        "-!{downloadable}",
-      t: "ns",
-      cl: clist,
-      st: "adv",
-      ob: sortby,
-      p: page,
-      sa: "and"
-    }
-  })
+      method: "GET",
+      url: "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi",
+      headers: {
+        "content-type": "application/octet-stream",
+        "x-rapidapi-host": "unogs-unogs-v1.p.rapidapi.com",
+        "x-rapidapi-key": process.env.NETFLIX_KEY
+      },
+      params: {
+        q: `-!${syear},${eyear}-!${snfrate},${enfrate}-!${simdbrate},${eimdbrate}-!${genreString}-!${vtype}-!${audio}-!${subtitle}-!${imdbvotes}` +
+          "-!{downloadable}",
+        t: "ns",
+        cl: clist,
+        st: "adv",
+        ob: sortby,
+        p: page,
+        sa: "and"
+      }
+    })
     .then(response => {
       console.log(response.headers["x-ratelimit-requests-remaining"]);
       return response.data.ITEMS.slice(0, 15);
@@ -53,18 +52,18 @@ const getSuggestions = array => {
 
 function findMovieById(id) {
   return axios({
-    method: "GET",
-    url: "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi",
-    headers: {
-      "content-type": "application/octet-stream",
-      "x-rapidapi-host": "unogs-unogs-v1.p.rapidapi.com",
-      "x-rapidapi-key": process.env.NETFLIX_KEY
-    },
-    params: {
-      t: "loadvideo",
-      q: id
-    }
-  })
+      method: "GET",
+      url: "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi",
+      headers: {
+        "content-type": "application/octet-stream",
+        "x-rapidapi-host": "unogs-unogs-v1.p.rapidapi.com",
+        "x-rapidapi-key": process.env.NETFLIX_KEY
+      },
+      params: {
+        t: "loadvideo",
+        q: id
+      }
+    })
     .then(response => {
       console.log(response.headers["x-ratelimit-requests-remaining"]);
       console.log(response.data.RESULT.nfinfo)
