@@ -1,0 +1,16 @@
+{{#each movie}}
+<h1>{{this.title}}</h1>
+<p>Synopsis: {{this.synopsis}}</p>
+<img src={{this.image}} alt={{this.title}}>
+<p>Rating: {{this.rating}}</p>
+<p>Released Year: {{this.released}}</p>
+<p>Duration: {{this.runtime}}</p>
+<a href="https://www.netflix.com/title/{{this.netflixid}}">Watch now</a>
+<a href="/">Get New</a>
+<a href="/">Add to "Already Watched" List</a>
+{{/each}}
+
+{{!-- <script>
+  let t = {{ {json  this }}
+  console.log("hgjgjhghg", t)
+</script> --}}
