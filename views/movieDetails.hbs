@@ -4,13 +4,13 @@ philosophical partner and a washed-up boxer.</p>
 <img src="http://cdn1.nflximg.net/images/4481/12144481.jpg" alt="teste"> --}}
 
 {{#with movie}}
-<h1>{{title}}</h1>
-<p>Synopsis: {{synopsis}}</p>
-<img src={{image}} onerror={{largeimage}} alt={{title}}>
-<p>Rating: {{rating}}</p>
-<p>Released Year: {{released}}</p>
-<p>Duration: {{runtime}}</p>
-<a href="https://www.netflix.com/title/{{netflixid}}">Watch now</a>
+<h1>{{nfinfo.title}}</h1>
+<p>Synopsis: {{nfinfo.synopsis}}</p>
+<img src={{nfinfo.image1}} onerror={{image}} alt={{nfinfo.title}}>
+<p>Rating: {{imdbinfo.rating}}</p>
+<p>Released Year: {{nfinfo.released}}</p>
+<p>Duration: {{nfinfo.runtime}}</p>
+<a href="https://www.netflix.com/title/{{nfinfo.netflixid}}">Watch now</a>
 <a href="/">Get New</a>
 <a href="/">Add to "Already Watched" List</a>
 {{/with}}

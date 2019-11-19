@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const getBitPrices = array => {
+const getSuggestions = array => {
   let syear = 1990; // start year;
   let eyear = 2019; // end year
   let snfrate = 0; // start Netflix rating
@@ -46,36 +46,39 @@ const getBitPrices = array => {
       console.log(response.headers["x-ratelimit-requests-remaining"]);
       //console.log(response.data);
       // res.json(response.data)
-      return response.data.ITEMS;
+      return response.data.ITEMS.slice(0, 15);
     })
     .catch(error => {
       console.log("HALLO  ", error);
     });
 };
 
-function findMovieById (id){
-   axios({
-     method: "GET",
-     url: "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi",
-     headers: {
-       "content-type": "application/octet-stream",
-       "x-rapidapi-host": "unogs-unogs-v1.p.rapidapi.com",
-       "x-rapidapi-key": process.env.NETFLIX_KEY
-     },
-     params: {
-       t: "loadvideo",
-       q: id
-     }
-   })
-     .then(response => {
-       console.log(response);
-     })
-     .catch(error => {
-       console.log(error);
-     });
+function findMovieById(id) {
+  return axios({
+    method: "GET",
+    url: "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi",
+    headers: {
+      "content-type": "application/octet-stream",
+      "x-rapidapi-host": "unogs-unogs-v1.p.rapidapi.com",
+      "x-rapidapi-key": process.env.NETFLIX_KEY
+    },
+    params: {
+      t: "loadvideo",
+      q: id
+    }
+  })
+    .then(response => {
+      console.log(response.headers["x-ratelimit-requests-remaining"]);
+      console.log(response.data.RESULT.nfinfo)
+      return response.data.RESULT
+    })
+    .catch(error => {
+      console.log(error);
+    });
 }
 
-module.exports = getBitPrices;
+module.exports.getSuggestions = getSuggestions;
+module.exports.findMovieById = findMovieById;
 
 /* document.querySelector("button").onclick = () => {
   getBitPrices();
