@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Genre = require("../models/Genres");
-const getBitPrices = require("../public/javascripts/NetflixAPI");
+const NetflixAPI = require("../public/javascripts/NetflixAPI");
+//const findMovieById = require("../public/javascripts/NetflixAPI");
 
 const loginCheck = () => {
   return (req, res, next) => {
@@ -35,7 +36,7 @@ router.get("/movies/search", (req, res, next) => {
   res.render("moviesSearch");
 });
 
-router.post("/movies/search", async (req, res, next) => {
+router.post("/movies/search", (req, res, next) => {
   //res.send(req.body);
   const selectedgenre = req.body.genre;
   Genre.find({
@@ -44,17 +45,34 @@ router.post("/movies/search", async (req, res, next) => {
       }
     })
     .then(async response => {
+      console.log(response);
       const genresID = response[0].genreIds;
 
-      // const something = await getBitPrices(genresID);
-      // console.log("ASDKlnfdskdsfn ", something);
-      const svenja = await getBitPrices(genresID);
-      console.log("AWAIIIITED ", svenja);
-      res.send(svenja);
+      const getMovies = await NetflixAPI.getSuggestions(genresID);
+      console.log("AWAIIIITED ", getMovies);
+      //res.render("movieDetails", { movie: getMovies[0] });
+      res.redirect(`/movies/details/${getMovies[0].netflixid}`);
     })
     .catch(err => {
       console.log(err);
     });
 });
 
+
+router.get("/movies/details/:id", async (req, res, next) => {
+  try {
+    const singleMovie = await NetflixAPI.findMovieById(req.params.id);
+    console.log(singleMovie)
+    res.render("movieDetails", {
+      movie: singleMovie
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+/* router.get("/movies/details", (req, res, next) => {
+  res.render("movieDetails");
+});
+ */
 module.exports = router;
