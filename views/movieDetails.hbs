@@ -1,31 +1,20 @@
-{{!-- <h1>Pulp Fiction</h1>
-<p>Quentin Tarantino&#39;s stylized crime caper weaves together stories featuring a burger-loving hit man, his
-philosophical partner and a washed-up boxer.</p>
-<img src="http://cdn1.nflximg.net/images/4481/12144481.jpg" alt="teste"> --}}
 
-{{#with movie}}
-<h1>{{nfinfo.title}}</h1>
-<p>Synopsis: {{nfinfo.synopsis}}</p>
-<img src={{nfinfo.image1}} onerror={{image}} alt={{nfinfo.title}}>
-<p>Rating: {{imdbinfo.rating}}</p>
-<p>Released Year: {{nfinfo.released}}</p>
-<p>Duration: {{nfinfo.runtime}}</p>
-<a href="https://www.netflix.com/title/{{nfinfo.netflixid}}">Watch now</a>
-<a href="/">Get New</a>
-<a href="/">Add to "Already Watched" List</a>
-{{/with}}
+{{#each movie}}
+<div>
+  <h1>{{title}}</h1>
+  <p>Synopsis: {{synopsis}}</p>
+  <img src={{image}} alt={{title}}>
+  <p>Rating: {{this.rating}}</p>
+  <p>Released Year: {{this.released}}</p>
+  <p>Duration: {{this.runtime}}</p>
+  <a href="https://www.netflix.com/title/{{this.netflixid}}">Watch now</a>
+  <a href="/">Get New</a>
+  <a href="/">Add to "Already Watched" List</a>
+</div>
+{{/each}}
 
-{{!-- netflixid: "880640",
-title: "Pulp Fiction",
-image:
-"https://occ-0-2219-2218.1.nflxso.net/dnm/api/v6/XsrytRUxks8BtTRf9HNlZkW2tvY/AAAABQm0PGUx-zbuK0VyTbvgDM4_abNWhDEhfN12mF70jWzJ1z34GXGSLSHPOrtyFNFwKa6O3xBngLLgNY3-BfjhHCCqgg.jpg?r=bd3",
-synopsis: "Quentin Tarantino&#39;s stylized crime caper weaves together stories featuring a burger-loving hit man, his
-philosophical partner and a washed-up boxer.",
-rating: "8.9",
-type: "movie",
-released: "1994",
-runtime: "2h34m",
-largeimage: "http://cdn1.nflximg.net/images/4481/12144481.jpg",
-unogsdate: "2015-04-14",
-imdbid: "tt0110912",
-download: "1" --}}
+<script>
+  console.log()
+  let test = {{movie[0]}}
+  console.log(test)
+</script>

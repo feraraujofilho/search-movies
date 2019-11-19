@@ -25,7 +25,9 @@ const User = require("./models/User");
 const bcrypt = require("bcrypt");
 
 /* -------------------------------------------- */
-
+hbs.registerHelper ("json", (context) =>{
+  return JSON.parse(context)
+})
 // CONNECT TO DATABASE
 
 mongoose
