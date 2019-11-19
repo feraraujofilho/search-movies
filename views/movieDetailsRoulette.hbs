@@ -1,18 +1,27 @@
 {{#each movie}}
-<div class="movie-details">
-  <h1>{{this.title}}</h1>
-  <p>Synopsis: {{this.synopsis}}</p>
-  <img src={{this.image}} alt={{this.title}}>
-  <p>Rating: {{this.rating}}</p>
-  <p>Released Year: {{this.released}}</p>
-  <p>Duration: {{this.runtime}}</p>
-  <a href="https://www.netflix.com/title/{{this.netflixid}}">Watch now</a>
-  <button onclick="addToSeen({{this.netflixid}})">I have already seen this</button>
-  <button onclick="addToWatchList({{this.netflixid}})">Add to Watch List</button>
+<div class="movie-block">
+  <div class="movie-details">
+    <h1>{{this.title}}</h1>
+    <div class="movies-info">
+      <img src={{this.image}} alt={{this.title}}>
+      <p class="synopsis">{{this.synopsis}}</p>
+    </div>
+    <div class="description">
+      <p><strong>RATING:  </strong> {{this.rating}}</p>
+      <p><strong>YEAR:  </strong> {{this.released}}</p>
+      <p><strong>RUNTIME:  </strong> {{this.runtime}}</p>
+    </div>
+    <div class="havewatched">
+      <button class="btn-movie" onclick="addToSeen({{this.netflixid}})">Already Watched</button>
+      <button class="btn-movie" onclick="addToWatchList({{this.netflixid}})">Add to Watch List</button>
+    </div>
+    <a class="btn-movie" href="https://www.netflix.com/title/{{this.netflixid}}">Watch now</a>
+    <button class="btn-movie" onclick="next()">Get New Suggestion</button>
+  </div>
+  {{/each}}
 </div>
-{{/each}}
 
-<button onclick="next()">Get New Suggestion</button>
+
 
 <script>
 
@@ -23,7 +32,7 @@
 
   const show = () => {
     listOfMovies.forEach((x, i) => {
-      if (i === showIndex) x.style.display = 'block'
+      if (i === showIndex) x.style.display = 'flex'
       if (i !== showIndex) x.style.display = 'none'
     })
   }
