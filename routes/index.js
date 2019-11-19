@@ -29,7 +29,7 @@ router.post("/movies/search", (req, res, next) => {
 
       const getMovies = await NetflixAPI.getSuggestions(genresID);
       console.log("AWAIIIITED ", getMovies);
-      //res.render("movieDetails", { movie: getMovies[0] });
+      //res.render("movieDetails", { movie: getMovies[0] });git checkout d
       res.redirect(`/movies/details/${getMovies[0].netflixid}`);
     })
     .catch(err => {
