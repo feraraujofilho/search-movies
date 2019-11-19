@@ -20,7 +20,6 @@ router.get("/movies/search", (req, res, next) => {
 });
 
 router.post("/movies/search", (req, res, next) => {
-  //res.send(req.body);
   const selectedgenre = req.body.genre;
   Genre.find({ genre: { $in: selectedgenre } })
     .then(async response => {
@@ -28,7 +27,6 @@ router.post("/movies/search", (req, res, next) => {
       const genresID = response[0].genreIds;
 
       const getMovies = await NetflixAPI.getSuggestions(genresID);
-      //console.log("AWAIIIITED ", getMovies);
       res.render("movieDetailsRoulette", { movie: getMovies })
       //res.redirect(`/movies/details/${getMovies[0].netflixid}`);
     })

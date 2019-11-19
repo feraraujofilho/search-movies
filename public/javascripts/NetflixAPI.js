@@ -44,12 +44,10 @@ const getSuggestions = array => {
   })
     .then(response => {
       console.log(response.headers["x-ratelimit-requests-remaining"]);
-      //console.log(response.data);
-      // res.json(response.data)
       return response.data.ITEMS.slice(0, 15);
     })
     .catch(error => {
-      console.log("HALLO  ", error);
+      console.log(error);
     });
 };
 
@@ -80,6 +78,3 @@ function findMovieById(id) {
 module.exports.getSuggestions = getSuggestions;
 module.exports.findMovieById = findMovieById;
 
-/* document.querySelector("button").onclick = () => {
-  getBitPrices();
-}; */

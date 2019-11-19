@@ -1,16 +1,38 @@
 {{#each movie}}
-<h1>{{this.title}}</h1>
-<p>Synopsis: {{this.synopsis}}</p>
-<img src={{this.image}} alt={{this.title}}>
-<p>Rating: {{this.rating}}</p>
-<p>Released Year: {{this.released}}</p>
-<p>Duration: {{this.runtime}}</p>
-<a href="https://www.netflix.com/title/{{this.netflixid}}">Watch now</a>
-<a href="/">Get New</a>
-<a href="/">Add to "Already Watched" List</a>
+<div class="movie-details">
+  <h1>{{this.title}}</h1>
+  <p>Synopsis: {{this.synopsis}}</p>
+  <img src={{this.image}} alt={{this.title}}>
+  <p>Rating: {{this.rating}}</p>
+  <p>Released Year: {{this.released}}</p>
+  <p>Duration: {{this.runtime}}</p>
+  <a href="https://www.netflix.com/title/{{this.netflixid}}">Watch now</a>
+  <a href="/">Get New</a>
+  <a href="/">Add to "Already Watched" List</a>
+</div>
 {{/each}}
 
-{{!-- <script>
-  let t = {{ {json  this }}
-  console.log("hgjgjhghg", t)
-</script> --}}
+<button onclick="next()">NEXT</button>
+
+<script>
+
+  let showIndex = 0;
+
+  const listOfMovies = document.querySelectorAll('.movie-details')
+  console.log(listOfMovies)
+
+  const show = () => {
+    listOfMovies.forEach((x, i) => {
+      if (i === showIndex) x.style.display = 'block'
+      if (i !== showIndex) x.style.display = 'none'
+    })
+  }
+
+  const next = () => {
+    showIndex += 1
+    console.log(showIndex)
+    show()
+  }
+  show()
+
+</script>
