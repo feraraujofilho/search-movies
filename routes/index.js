@@ -45,12 +45,14 @@ router.post("/movies/search", (req, res, next) => {
       }
     })
     .then(async response => {
-      console.log(response);
+      console.log(response[0]);
       const genresID = response[0].genreIds;
 
       const getMovies = await NetflixAPI.getSuggestions(genresID);
       //console.log("AWAIIIITED ", getMovies);
-      res.render("movieDetailsRoulette", { movie: getMovies })
+      res.render("movieDetailsRoulette", {
+        movie: getMovies
+      })
       //res.redirect(`/movies/details/${getMovies[0].netflixid}`);
     })
     .catch(err => {
