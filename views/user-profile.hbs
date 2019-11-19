@@ -1,12 +1,19 @@
-<h1>Welcome {{user.username}}</h1>
-<br>
-<br>
-<h2>My profile</h2>
-<br>
-<h4>Username: user.username</h4>
-<button>edit</button>
-
-<br>
-
-<h4>My watchlist</h4>
-<button>edit</button>
+<div class="card my-profile" style="width: 18rem;">
+  <div class="card-body">
+    <h4 class="card-title">{{user.username}}'s profile</h4>
+  </div>
+  <div class="list-group list-group-flush">
+    <h5 class="list-group-item">On my watch list:</h5>
+    <ul>
+      {{#each toWatch}}
+      <li>{{toWatch.title}}</li>
+      {{/each}}
+    </ul>
+    <h5 class="list-group-item">Movies I've seen:</h5>
+    <ul>
+      {{#each seen}}
+      <li>{{seen.title}}</li>
+      {{/each}}
+    </ul>
+  </div>
+</div>

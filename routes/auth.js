@@ -13,7 +13,12 @@ router.get("/signup", (req, res, next) => {
 });
 
 router.post("/signup", (req, res, next) => {
-  const { username, password } = req.body;
+  const {
+    username,
+    password
+  } = req.body;
+  console.log(username)
+  console.log(password);
   // restriction checks
   if (!username) {
     res.render("auth/signup.hbs", {
@@ -49,13 +54,15 @@ router.post("/signup", (req, res, next) => {
             password: hash
           });
         })
-        .then(signedUpUser => {
+        .then(newUser => {
           // log in new user with passport
-          req.login(signedUpUser, err => {
+          console.log('fkasfkla;jlkfjas;' + newUser)
+          req.login(newUser, err => {
             if (err) {
               next(err);
             } else {
-              res.redirect("/");
+              req.user = newUser;
+              res.redirect("/profile");
             }
           });
         });
@@ -67,6 +74,7 @@ router.post("/signup", (req, res, next) => {
 
 // login local
 router.get("/login", (req, res, next) => {
+  console.log('login successful');
   res.render("auth/login.hbs");
 });
 
@@ -79,19 +87,19 @@ router.post(
   })
 );
 
-// login facebook
-router.get("/auth/facebook", passport.authenticate("facebook"));
+// // login facebook
+// router.get("/auth/facebook", passport.authenticate("facebook"));
 
-router.get(
-  "/auth/facebook/callback",
-  passport.authenticate("facebook", {
-    failureRedirect: "/login"
-  }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect("/profile");
-  }
-);
+// router.get(
+//   "/auth/facebook/callback",
+//   passport.authenticate("facebook", {
+//     failureRedirect: "/login"
+//   }),
+//   function (req, res) {
+//     // Successful authentication, redirect profile
+//     res.redirect("/profile");
+//   }
+// );
 
 // login google
 // app.get(

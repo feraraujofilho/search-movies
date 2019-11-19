@@ -25,7 +25,9 @@ const User = require("./models/User");
 const bcrypt = require("bcrypt");
 
 /* -------------------------------------------- */
-
+hbs.registerHelper ("json", (context) =>{
+  return JSON.parse(context)
+})
 // CONNECT TO DATABASE
 
 mongoose
@@ -217,6 +219,6 @@ app.use("/auth", authRoutes);
 /* -------------------------------------------- */
 
 // default value for title local
-app.locals.title = "Netflix Movie Search";
+//app.locals.title = "Netflix Movie Search";
 
 module.exports = app;
