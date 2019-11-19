@@ -14,15 +14,40 @@
 
 <body>
 
+  <div class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">MovieMatch</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+      aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <nav>
-    <a href="/">Home</a>
-    <a href="/auth/login">Login</a>
-    <a href="/auth/signup">Signup</a>
-    <a href="/auth/logout">Logout</a>
-  </nav>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/profile">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/auth/signup">Sign Up</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/auth/login">Log In</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/auth/logout">Log Out</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/movies/search">Search movies</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
 
   {{{body}}}
+
 
   <script src="/javascripts/script.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

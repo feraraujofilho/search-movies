@@ -211,6 +211,6 @@ app.use("/auth", authRoutes);
 /* -------------------------------------------- */
 
 // default value for title local
-app.locals.title = "Netflix Movie Search";
+//app.locals.title = "Netflix Movie Search";
 
 module.exports = app;

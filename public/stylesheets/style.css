@@ -1,8 +1,76 @@
 body {
-  padding: 50px;
+  padding: 15px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
 
-a {
-  color: #00B7FF; }
+/*-----------------------------------------*/
+.index {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.background {
+  background-image: url("../images/netflix-banner.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 500px; }
+
+.feature-container {
+  display: flex;
+  flex-direction: row;
+  margin: 50px; }
+
+.feature-el {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid orange;
+  border-radius: 10px;
+  margin: 5px; }
+
+.feature-el p {
+  text-align: center; }
+
+.feature-el h4 {
+  height: 60px;
+  text-align: center;
+  padding-bottom: 10px;
+  margin: 10px;
+  align-items: center; }
+
+/*-----------------------------------------*/
+.signup-login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 60%;
+  background-image: url("../images/form-background.jpeg");
+  background-size: cover;
+  color: white;
+  margin-top: 30px; }
+
+.signup-login-container h3 {
+  text-align: center;
+  margin-top: 30px; }
+
+.signup-login-container .account-message {
+  text-align: center;
+  margin-top: 40px; }
+
+.signup-login-form {
+  display: flex;
+  flex-direction: column; }
+
+.signup-login-form div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 20px; }
+
+.signup-login-form .form-group {
+  width: 300px; }
+
+.my-profile {
+  margin: 30px; }
 
 /*# sourceMappingURL=style.css.map */

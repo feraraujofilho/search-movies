@@ -6,8 +6,10 @@ const getBitPrices = require("../public/javascripts/NetflixAPI");
 const loginCheck = () => {
   return (req, res, next) => {
     if (req.user) {
+      console.log("login check passed")
       next();
     } else {
+      console.log("login check failed")
       res.redirect("/");
     }
   };
@@ -21,8 +23,11 @@ router.get("/", (req, res, next) => {
 });
 
 // get user profile page
-router.get("/profile", loginCheck(), (req, res, next) => {
-  res.render("user-profile.hbs");
+router.get("/profile/", loginCheck(), (req, res, next) => {
+  console.log(req.user)
+  res.render('user-profile.hbs', {
+    user: req.user
+  })
 });
 
 /* GET movies search */
@@ -33,7 +38,11 @@ router.get("/movies/search", (req, res, next) => {
 router.post("/movies/search", async (req, res, next) => {
   //res.send(req.body);
   const selectedgenre = req.body.genre;
-  Genre.find({ genre: { $in: selectedgenre } })
+  Genre.find({
+      genre: {
+        $in: selectedgenre
+      }
+    })
     .then(async response => {
       const genresID = response[0].genreIds;
 
