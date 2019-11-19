@@ -30,7 +30,8 @@ const bcrypt = require("bcrypt");
 
 mongoose
   .connect(
-    `mongodb://${process.env.DATABASE_CONNECTION}/NetflixSearch` || MONGODB_URI,
+    process.env.MONGODB_URI ||
+      `mongodb://${process.env.DATABASE_CONNECTION}/NetflixSearch`,
     { useNewUrlParser: true }
   )
   .then(x => {
@@ -121,8 +122,8 @@ passport.deserializeUser((id, done) => {
 passport.use(
   new LocalStrategy((username, password, done) => {
     User.findOne({
-        username
-      })
+      username
+    })
       .then(user => {
         // no username match
         if (!user) {
@@ -151,19 +152,25 @@ passport.use(
 );
 
 // facebook strategy --> auth with passport
-passport.use(new FacebookStrategy({
-    clientID: process.env.FACEBOOK_APP_ID,
-    clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:3030/auth/facebook/callback"
-  },
-  function (profile, cb) {
-    User.findOrCreate({
-      facebookId: profile.id
-    }, function (err, user) {
-      return cb(err, user);
-    });
-  }
-));
+passport.use(
+  new FacebookStrategy(
+    {
+      clientID: process.env.FACEBOOK_APP_ID,
+      clientSecret: process.env.FACEBOOK_APP_SECRET,
+      callbackURL: "http://localhost:3030/auth/facebook/callback"
+    },
+    function(profile, cb) {
+      User.findOrCreate(
+        {
+          facebookId: profile.id
+        },
+        function(err, user) {
+          return cb(err, user);
+        }
+      );
+    }
+  )
+);
 
 // google strategy --> auth with passport
 // passport.use(
