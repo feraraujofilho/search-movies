@@ -30,8 +30,7 @@ const bcrypt = require("bcrypt");
 
 mongoose
   .connect(
-    `mongodb://${process.env.DATABASE_CONNECTION}/NetflixSearch` ||
-      "mongodb://heroku_mhtrzgcn:243qkku7e0kvdr2vdvf6vl2q3f@ds039088.mlab.com:39088/heroku_mhtrzgcn",
+    `mongodb://${process.env.DATABASE_CONNECTION}/NetflixSearch` || MONGODB_URI,
     { useNewUrlParser: true }
   )
   .then(x => {
