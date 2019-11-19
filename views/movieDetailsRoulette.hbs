@@ -7,12 +7,12 @@
   <p>Released Year: {{this.released}}</p>
   <p>Duration: {{this.runtime}}</p>
   <a href="https://www.netflix.com/title/{{this.netflixid}}">Watch now</a>
-  <a href="/">Get New</a>
-  <a href="/">Add to "Already Watched" List</a>
+  <button onclick="addToSeen()" >I have already seen this</button>
+  <button onclick="addToWatchList()" >Add to Watch List</button>
 </div>
 {{/each}}
 
-<button onclick="next()">NEXT</button>
+<button onclick="next()">Get New Suggestion</button>
 
 <script>
 
