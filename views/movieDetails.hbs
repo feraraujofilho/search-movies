@@ -5,8 +5,13 @@ philosophical partner and a washed-up boxer.</p>
 
 {{#with movie}}
 <h1>{{title}}</h1>
-<p>{{synopsis}}</p>
+<p>Synopsis: {{synopsis}}</p>
 <img src={{image}} onerror={{largeimage}} alt={{title}}>
+<p>Rating: {{rating}}</p>
+<p>Released Year: {{released}}</p>
+<p>Duration: {{runtime}}</p>
+<a href="/">Get New</a>
+<a href="/">Add to "Already Watched" List</a>
 {{/with}}
 
 {{!-- netflixid: "880640",
