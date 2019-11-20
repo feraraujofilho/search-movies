@@ -75,6 +75,7 @@ body {
   margin: 30px; }
 
 .movie-details {
+  display: flex;
   flex-direction: column;
   align-items: center;
   height: 80vh;
@@ -95,15 +96,17 @@ body {
   display: flex;
   align-items: center;
   margin: 8px;
-  text-align: center; }
+  text-align: center;
+  font-size: 0.8rem; }
 
 .movies-info {
   display: flex;
-  align-items: space-between;
-  margin: 2vh 0; }
+  flex-direction: column;
+  align-items: center; }
 
 .description {
-  display: flex; }
+  display: flex;
+  align-items: center; }
 
 .description p {
   padding: 2vh;

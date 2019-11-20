@@ -25,17 +25,25 @@ router.get("/", (req, res, next) => {
 });
 
 // get user profile page
-router.get("/profile/", loginCheck(), (req, res, next) => {
+router.get("/profile/:id", loginCheck(), (req, res, next) => {
   console.log(req.user);
-  res.render("user-profile.hbs", {
-    loggedIn: req.user,
-    user: req.user
-  });
+  User.find({
+    _id: req.params.id
+  }).then(response =>{
+    console.log(response)
+    res.render("user-profile.hbs", {
+      loggedIn: req.user,
+      user: req.user,
+      userProfile: response[0]
+    })
+
+  }
+  )
 });
 
 /* GET movies search */
 router.get("/movies/search", loginCheck(), (req, res, next) => {
-  //console.log('user:', req.session.passport.user)
+  // console.log('user:', req.session.passport.user)
   res.render("moviesSearch", { loggedIn: req.user });
 });
 
@@ -67,18 +75,18 @@ router.post("/movies/search", (req, res, next) => {
     });
 });
 
-router.post('/movies/seen/:id', (req, res, next) => {
-  const movieWatched = req.params.id;
+router.post('/movies/seen/', (req, res, next) => {
+  const movieWatched = req.body;
   User.find({
       _id: req.session.passport.user
     })
     .then(user => {
-      let newArray = [...user[0].seen];
-      newArray.push(movieWatched);
+      let newSeen = [...user[0].seen];
+      newSeen.push(movieWatched);
       User.findByIdAndUpdate(
           req.session.passport.user, {
             $set: {
-              seen: newArray
+              seen: newSeen
             }
           }, {
             new: true
@@ -92,32 +100,32 @@ router.post('/movies/seen/:id', (req, res, next) => {
     })
 });
 
-router.post('/movies/watchlist/:id', (req, res, next) => {
-  const movieToWatch = req.params.id;
+router.post('/movies/watchlist/', (req, res, next) => {
+  const movieToWatch = req.body;
   User.find({
-      _id: req.session.passport.user
-    })
-    .then(user => {
-      let newWatchlist = [...user[0].watchlist];
-      newWatchlist.push(movieToWatch);
-      User.findByIdAndUpdate(
-          req.session.passport.user, {
-            $set: {
-              watchlist: newWatchlist
-            }
-          }, {
-            new: true
-          })
-        .then(user => {
-          console.log(user)
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    })
+    _id: req.session.passport.user
+  }).then(user => {
+    let newWatchlist = [...user[0].watchlist];
+    newWatchlist.push(movieToWatch);
+    User.findByIdAndUpdate(
+      req.session.passport.user,
+      {
+        $set: {
+          watchlist: newWatchlist
+        }
+      },
+      {
+        new: true
+      }
+    )
+      .then(user => {
+        console.log(user);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
 });
-
-
 
 router.get("/movies/details/:id", async (req, res, next) => {
   try {
@@ -130,6 +138,26 @@ router.get("/movies/details/:id", async (req, res, next) => {
   } catch (err) {
     console.log(err);
   }
+});
+
+router.post("/profile/follow/:userid", (req, res, next) => {
+  User.findByIdAndUpdate(
+    req.session.passport.user,
+    {
+      $push: {
+        follow: req.params.userid
+      }
+    },
+    {
+      new: true
+    }
+  )
+    .then(user => {
+      console.log(user);
+    })
+    .catch(err => {
+      console.log(err);
+    });
 });
 
 /* router.get("/movies/details", (req, res, next) => {

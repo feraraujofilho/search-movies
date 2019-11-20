@@ -56,13 +56,12 @@ router.post("/signup", (req, res, next) => {
         })
         .then(newUser => {
           // log in new user with passport
-          console.log('fkasfkla;jlkfjas;' + newUser)
           req.login(newUser, err => {
             if (err) {
               next(err);
             } else {
               req.user = newUser;
-              res.redirect("/profile");
+              res.redirect(`/profile/${newUser._id}`);
             }
           });
         });
@@ -78,14 +77,24 @@ router.get("/login", (req, res, next) => {
   res.render("auth/login.hbs");
 });
 
-router.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/profile",
-    failureRedirect: "/auth/login",
-    failureFlash: true
-  })
-);
+
+router.post("/login", function(req, res, next) {
+  passport.authenticate("local", function(err, user, info) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.render("auth/login.hbs", {message: "Username or Password Incorreçct"});
+    }
+    req.logIn(user, function(err) {
+      console.log(user)
+      if (err) {
+        return next(err);
+      }
+      return res.redirect("/profile/" + user._id);
+    });
+  })(req, res, next);
+});
 
 // // login facebook
 // router.get("/auth/facebook", passport.authenticate("facebook"));

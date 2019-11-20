@@ -43,7 +43,15 @@ const getSuggestions = array => {
     })
     .then(response => {
       console.log(response.headers["x-ratelimit-requests-remaining"]);
-      return response.data.ITEMS.slice(0, 15);
+      //console.log(response.data.ITEMS)
+      let moviesData = response.data.ITEMS;
+      for (let i=0; i<moviesData.length; i++){
+        for (var prop in moviesData[i]) {
+        moviesData[i][prop] = moviesData[i][prop].replace(/&#39;/g, "'")
+        }
+
+      }
+      return response.data.ITEMS.slice(0, 50);
     })
     .catch(error => {
       console.log(error);
