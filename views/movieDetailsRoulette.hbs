@@ -7,9 +7,9 @@
       <p class="synopsis">{{this.synopsis}}</p>
     </div>
     <div class="description">
-      <p><strong>RATING:  </strong> {{this.rating}}</p>
-      <p><strong>YEAR:  </strong> {{this.released}}</p>
-      <p><strong>RUNTIME:  </strong> {{this.runtime}}</p>
+      <p><strong>RATING: </strong> {{this.rating}}</p>
+      <p><strong>YEAR: </strong> {{this.released}}</p>
+      <p><strong>RUNTIME: </strong> {{this.runtime}}</p>
     </div>
     <div class="havewatched">
       <button class="btn-movie" onclick="addToSeen({{this.netflixid}})">Already Watched</button>
@@ -24,27 +24,21 @@
 
 
 <script>
-
   let showIndex = 0;
-
   const listOfMovies = document.querySelectorAll('.movie-details')
   console.log(listOfMovies)
-
   const show = () => {
     listOfMovies.forEach((x, i) => {
       if (i === showIndex) x.style.display = 'flex'
       if (i !== showIndex) x.style.display = 'none'
     })
   }
-
   const next = () => {
     showIndex += 1
     console.log(showIndex)
     show()
-
   }
   show();
-
   const addToSeen = (netflixId) => {
     console.log(netflixId);
     axios
@@ -57,7 +51,6 @@
         console.log(err)
       })
   };
-
   const addToWatchList = (netflixId) => {
     console.log(netflixId);
     axios
@@ -69,5 +62,4 @@
         console.log(err)
       })
   };
-
 </script>

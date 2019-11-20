@@ -43,7 +43,9 @@ const getSuggestions = array => {
     })
     .then(response => {
       console.log(response.headers["x-ratelimit-requests-remaining"]);
-      return response.data.ITEMS.slice(0, 15);
+      //console.log(response.data.ITEMS)
+
+      return response.data.ITEMS.slice(0, 50);
     })
     .catch(error => {
       console.log(error);
