@@ -24,6 +24,17 @@ router.get("/", (req, res, next) => {
   });
 });
 
+// GET community
+router.get("/community", loginCheck(), (req, res, next) => {
+  User.find({})
+    .then(document => {
+      res.render("community.hbs", { people: document });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
 // get user profile page
 router.get("/profile/:id", loginCheck(), (req, res, next) => {
   console.log(req.user);
@@ -31,10 +42,11 @@ router.get("/profile/:id", loginCheck(), (req, res, next) => {
     _id: req.params.id
   })
     .then(response => {
+      console.log(response);
       res.render("user-profile.hbs", {
-        loggedIn: req.user,
-        user: req.user,
         userProfile: response[0],
+        user: req.user,
+        loggedIn: req.user,
         showFollow:
           req.user._id.toString() != response[0]._id.toString() &&
           req.user.follow
@@ -61,17 +73,17 @@ router.post("/movies/search", (req, res, next) => {
   const selectedgenre = req.body.genre;
 
   Genre.find({
-      genre: {
-        $in: selectedgenre
-      }
-    })
+    genre: {
+      $in: selectedgenre
+    }
+  })
     .then(async response => {
       console.log(response);
       const genresID = response
         .map(value => {
           return value.genreIds;
         })
-        .reduce(function (a, b) {
+        .reduce(function(a, b) {
           return a.concat(b);
         }, []);
       console.log(genresID);
@@ -138,14 +150,16 @@ router.post("/movies/watchlist/", (req, res, next) => {
     let newWatchlist = [...user[0].watchlist];
     newWatchlist.push(movieToWatch);
     User.findByIdAndUpdate(
-        req.session.passport.user, {
-          $set: {
-            watchlist: newWatchlist
-          }
-        }, {
-          new: true
+      req.session.passport.user,
+      {
+        $set: {
+          watchlist: newWatchlist
         }
-      )
+      },
+      {
+        new: true
+      }
+    )
       .then(user => {
         console.log(user);
       })

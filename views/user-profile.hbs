@@ -15,7 +15,7 @@
     <h5 class="list-group-item">On my watch list:</h5>
     <ul>
       {{#each userProfile.watchlist}}
-      <li><a href="">{{title}}</a></li>
+      <li><a href="/movies/details/{{netflixId}}">{{title}}</a></li>
       {{/each}}
     </ul>
     {{/if}}
@@ -38,6 +38,8 @@
   let btnTry = document.getElementById("followbtn")
   const follow = (id, username) => {
     console.log("test: ", username)
+    //axios
+    //.post(`/profile/follow/${id}`)
     axios({
       method: 'post',
       url: '/profile/follow/',
