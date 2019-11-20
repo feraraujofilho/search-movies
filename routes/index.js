@@ -29,6 +29,7 @@ router.get("/profile/:id", loginCheck(), (req, res, next) => {
   console.log(req.user);
   User.find({
     _id: req.params.id
+<<<<<<< HEAD
   })
     .then(response => {
       res.render("user-profile.hbs", {
@@ -47,29 +48,42 @@ router.get("/profile/:id", loginCheck(), (req, res, next) => {
     .catch(err => {
       console.log(err);
     });
+=======
+  }).then(response => {
+    console.log(response)
+    res.render("user-profile.hbs", {
+      loggedIn: req.user,
+      user: req.user,
+      userProfile: response[0]
+    })
+
+  })
+>>>>>>> 6054887ede3e92673d2f4c04845cf33037f479ee
 });
 
 /* GET movies search */
 router.get("/movies/search", loginCheck(), (req, res, next) => {
   // console.log('user:', req.session.passport.user)
-  res.render("moviesSearch", { loggedIn: req.user });
+  res.render("moviesSearch", {
+    loggedIn: req.user
+  });
 });
 
 router.post("/movies/search", (req, res, next) => {
   const selectedgenre = req.body.genre;
 
   Genre.find({
-    genre: {
-      $in: selectedgenre
-    }
-  })
+      genre: {
+        $in: selectedgenre
+      }
+    })
     .then(async response => {
       console.log(response);
       const genresID = response
         .map(value => {
           return value.genreIds;
         })
-        .reduce(function(a, b) {
+        .reduce(function (a, b) {
           return a.concat(b);
         }, []);
       console.log(genresID);
@@ -136,16 +150,14 @@ router.post("/movies/watchlist/", (req, res, next) => {
     let newWatchlist = [...user[0].watchlist];
     newWatchlist.push(movieToWatch);
     User.findByIdAndUpdate(
-      req.session.passport.user,
-      {
-        $set: {
-          watchlist: newWatchlist
+        req.session.passport.user, {
+          $set: {
+            watchlist: newWatchlist
+          }
+        }, {
+          new: true
         }
-      },
-      {
-        new: true
-      }
-    )
+      )
       .then(user => {
         console.log(user);
       })

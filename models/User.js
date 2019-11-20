@@ -5,6 +5,7 @@ const userSchema = new Schema({
   username: String,
   password: String,
   follow: [Object],
+  googleId: String,
   watchlist: [
     {
       title: String,

@@ -19,22 +19,23 @@ const flash = require("connect-flash");
 //auth
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
-//const GoogleStrategy = require("passport-google-oauth2").Strategy;
-const FacebookStrategy = require("passport-facebook").Strategy;
+const GoogleStrategy = require("passport-google-oauth2").Strategy;
+//const FacebookStrategy = require("passport-facebook").Strategy;
 const User = require("./models/User");
 const bcrypt = require("bcrypt");
 
 /* -------------------------------------------- */
-hbs.registerHelper ("json", (context) =>{
+hbs.registerHelper("json", (context) => {
   return JSON.parse(context)
 })
 // CONNECT TO DATABASE
 
 mongoose
   .connect(
-    `mongodb://${process.env.DATABASE_CONNECTION}/NetflixSearch` ||
-      "mongodb://heroku_mhtrzgcn:243qkku7e0kvdr2vdvf6vl2q3f@ds039088.mlab.com:39088/heroku_mhtrzgcn",
-    { useNewUrlParser: true }
+    process.env.MONGODB_URI ||
+    `mongodb://${process.env.DATABASE_CONNECTION}/NetflixSearch`, {
+      useNewUrlParser: true
+    }
   )
   .then(x => {
     console.log(
@@ -71,7 +72,7 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET,
     cookie: {
-      maxAge: 48 * 60 * 60 //48h cookie
+      maxAge: 24 * 60 * 60 * 1000,
     },
     resave: false,
     saveUninitialized: false,
@@ -154,52 +155,57 @@ passport.use(
 );
 
 // facebook strategy --> auth with passport
-passport.use(new FacebookStrategy({
-    clientID: process.env.FACEBOOK_APP_ID,
-    clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:3030/auth/facebook/callback"
-  },
-  function (profile, cb) {
-    User.findOrCreate({
-      facebookId: profile.id
-    }, function (err, user) {
-      return cb(err, user);
-    });
-  }
-));
-
-// google strategy --> auth with passport
 // passport.use(
-//   new GoogleStrategy({
-//       clientID: process.env.GOOGLE_CLIENT_ID, //not registered yet
-//       clientSecret: process.env.GOOGLE_CLIENT_SECRET, //not registered yet
-//       callbackURL: "http://localhost:3030/auth/google/callback" //not registered yet
+//   new FacebookStrategy({
+//       clientID: process.env.FACEBOOK_APP_ID,
+//       clientSecret: process.env.FACEBOOK_APP_SECRET,
+//       callbackURL: "http://localhost:3000/auth/facebook/callback"
 //     },
-//     (request, accessToken, refreshToken, profile, done) => {
-//       User.findOne({
-//           googleId: profile.id
-//         })
-//         // if user found
-//         .then(user => {
-//           if (user) {
-//             // log in user
-//             done(null, user);
-//           } else {
-//             // create as new user
-//             User.create({
-//               googleId: profile.id
-//             }).then(createdUser => {
-//               // log the new user in
-//               done(null, createdUser);
-//             });
-//           }
-//         })
-//         .catch(err => {
-//           done(err);
-//         });
+//     function (profile, cb) {
+//       User.findOrCreate({
+//           facebookId: profile.id
+//         },
+//         function (err, user) {
+//           return cb(err, user);
+//         }
+//       );
 //     }
 //   )
 // );
+
+// google strategy --> auth with passport
+passport.use(
+  new GoogleStrategy({
+      clientID: process.env.GOOGLE_CLIENT_ID, //not registered yet
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET, //not registered yet
+      callbackURL: "http://localhost:3000/auth/google/callback" //not registered yet
+    },
+    (request, accessToken, refreshToken, profile, done) => {
+      User.findOne({
+          googleId: profile.id
+        })
+        // if user found
+        .then(user => {
+          if (user) {
+            // log in user
+            done(null, user);
+          } else {
+            // create as new user
+            User.create({
+              googleId: profile.id,
+              username: profile.name.givenName
+            }).then(createdUser => {
+              // log the new user in
+              done(null, createdUser);
+            });
+          }
+        })
+        .catch(err => {
+          done(err);
+        });
+    }
+  )
+);
 
 /* -------------------------------------------- */
 

@@ -10,12 +10,22 @@
     <p><strong>YEAR: </strong> {{this.released}}</p>
     <p><strong>RUNTIME: </strong> {{this.runtime}}</p>
   </div>
+
+
   <div class="havewatched">
-    <button class="btn-movie" onclick="addToSeen({{this.netflixid}},'{{this.title}}')">Already Watched</button>
-    <button class="btn-movie" onclick="addToWatchList({{this.netflixid}},'{{this.title}}')">Add to Watch List</button>
+
+    <button class="btn-movie" id="toSeen"
+      onclick="addToSeen({{this.netflixid}},`{{this.title}}`); disableBtn();">Already
+      Watched</button>
+
+    <button class="btn-movie" id="toWatch"
+      onclick="addToWatchList({{this.netflixid}},`{{this.title}}`), disableBtn();">Add to Watch
+      List</button>
   </div>
+
+
   <a class="btn-movie" href="https://www.netflix.com/title/{{this.netflixid}}">Watch now</a>
-  <button class="btn-movie" onclick="next()">Get New Suggestion</button>
+  <button class="btn-movie" onclick="next();">Get New Suggestion</button>
   {{!-- <div>
       <iframe width="640" height="360"
         src="https://www.youtube.com/embed/?listType=search&list={{this.title}}_trailer&autoplay=1"/>
@@ -28,7 +38,7 @@
 <script>
   let showIndex = 0;
   const listOfMovies = document.querySelectorAll('.movie-details')
-  console.log(listOfMovies)
+  //console.log(listOfMovies)
   const show = () => {
     listOfMovies.forEach((x, i) => {
       if (i === showIndex) x.style.display = 'flex'
@@ -43,8 +53,6 @@
   show();
 
   const addToSeen = (netflixId, title) => {
-    console.log('sent to BE - netflixId ', netflixId);
-    console.log('sent to BE - title ', title);
     axios({
       method: 'post',
       url: '/movies/seen/',
@@ -55,7 +63,6 @@
     })
       .then(response => {
         console.log(response);
-        next();
       })
       .then(err => {
         console.log(err)
@@ -63,8 +70,6 @@
   };
 
   const addToWatchList = (netflixId, title) => {
-    console.log('sent to BE - netflixId ', netflixId);
-    console.log('sent to BE - title ', title);
     axios({
       method: 'post',
       url: '/movies/watchlist/',
@@ -74,4 +79,14 @@
       }
     })
   };
+
+  const disableBtn = () => {
+    let toSeenList = document.querySelectorAll("#toSeen");
+    toSeenList[showIndex].style.display = 'none';
+
+    let toWatchList = document.querySelectorAll("#toWatch");
+    toWatchList[showIndex].style.display = 'none';
+  };
+
+
 </script>
