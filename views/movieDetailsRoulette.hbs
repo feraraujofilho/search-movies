@@ -1,27 +1,27 @@
 {{#each movie}}
-  <div class="movie-details">
-    <h1>{{this.title}}</h1>
-    <div class="movies-info">
-      <img src={{this.image}} alt={{this.title}}>
-      <p class="synopsis">{{this.synopsis}}</p>
-    </div>
-    <div class="description">
-      <p><strong>RATING: </strong> {{this.rating}}</p>
-      <p><strong>YEAR: </strong> {{this.released}}</p>
-      <p><strong>RUNTIME: </strong> {{this.runtime}}</p>
-    </div>
-    <div class="havewatched">
-      <button class="btn-movie" onclick="addToSeen({{this.netflixid}})">Already Watched</button>
-      <button class="btn-movie" onclick="addToWatchList({{this.netflixid}})">Add to Watch List</button>
-    </div>
-    <a class="btn-movie" href="https://www.netflix.com/title/{{this.netflixid}}">Watch now</a>
-    <button class="btn-movie" onclick="next()">Get New Suggestion</button>
-    {{!-- <div>
+<div class="movie-details">
+  <h1>{{this.title}}</h1>
+  <div class="movies-info">
+    <img src={{this.image}} alt={{this.title}}>
+    <p class="synopsis">{{this.synopsis}}</p>
+  </div>
+  <div class="description">
+    <p><strong>RATING: </strong> {{this.rating}}</p>
+    <p><strong>YEAR: </strong> {{this.released}}</p>
+    <p><strong>RUNTIME: </strong> {{this.runtime}}</p>
+  </div>
+  <div class="havewatched">
+    <button class="btn-movie" onclick="addToSeen({{this.netflixid}},'{{this.title}}')">Already Watched</button>
+    <button class="btn-movie" onclick="addToWatchList({{this.netflixid}},'{{this.title}}')">Add to Watch List</button>
+  </div>
+  <a class="btn-movie" href="https://www.netflix.com/title/{{this.netflixid}}">Watch now</a>
+  <button class="btn-movie" onclick="next()">Get New Suggestion</button>
+  {{!-- <div>
       <iframe width="640" height="360"
         src="https://www.youtube.com/embed/?listType=search&list={{this.title}}_trailer&autoplay=1"/>
     </div> --}}
-  </div>
-  {{/each}}
+</div>
+{{/each}}
 
 
 
