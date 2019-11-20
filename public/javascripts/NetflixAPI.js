@@ -75,7 +75,7 @@ function findMovieById(id) {
     .then(response => {
       console.log(response.headers["x-ratelimit-requests-remaining"]);
       console.log(response.data.RESULT.nfinfo)
-      return response.data.RESULT
+      return response.data.RESULT.nfinfo
     })
     .catch(error => {
       console.log(error);
