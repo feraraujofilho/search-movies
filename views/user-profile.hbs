@@ -6,7 +6,7 @@
   <div class="followed">
     <ul>
       {{#each userProfile.follow}}
-      <li>{{this}}</li>
+      <li><a href="/profile/{{this.id}}">{{this.username}}</a></li>
       {{/each}}
     </ul>
   </div>
@@ -22,33 +22,40 @@
     {{#if userProfile.seen}}
     <h5 class="list-group-item">Movies I've seen:</h5>
     <ul>
-      {{#each user.seen}}
+      {{#each userProfile.seen}}
       <li><a href="">{{title}}</a></li>
       {{/each}}
     </ul>
     {{/if}}
-        <button id="followbtn" onclick="follow({{user._id}})">Follow Friend</button>
+    {{#if showFollow}}
+    <button id="followbtn" onclick="follow('{{userProfile._id}}','{{userProfile.username}}')"> Follow Friend </button>
+    {{/if}}
   </div>
 </div>
 
 
 <script>
-  const theBtn = document.getElementById("followbtn")
-  if (user._id !== loggedIn._id) {
-    theBtn.style.display = "block"
-  }
-  else (
-    theBtn.style.display = "none"
-  )
-  const follow = (id) => {
-    axios
-      .post(`/profile/follow/${id}`)
+  let btnTry = document.getElementById("followbtn")
+  const follow = (id, username) => {
+    console.log("test: ", username)
+    //axios
+    //.post(`/profile/follow/${id}`)
+    axios({
+      method: 'post',
+      url: '/profile/follow/',
+      data: {
+        id,
+        username
+      }
+    })
       .then(response => {
+        btnTry.style.display = 'none'
         console.log(response);
-        next();
+        console.log("oi", btnTry)
       })
-      .then(err => {
+      .catch(err => {
         console.log(err)
       })
+
   }
 </script>

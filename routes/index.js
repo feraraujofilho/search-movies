@@ -29,16 +29,24 @@ router.get("/profile/:id", loginCheck(), (req, res, next) => {
   console.log(req.user);
   User.find({
     _id: req.params.id
-  }).then(response =>{
-    console.log(response)
-    res.render("user-profile.hbs", {
-      loggedIn: req.user,
-      user: req.user,
-      userProfile: response[0]
+  })
+    .then(response => {
+      res.render("user-profile.hbs", {
+        loggedIn: req.user,
+        user: req.user,
+        userProfile: response[0],
+        showFollow:
+          req.user._id.toString() != response[0]._id.toString() &&
+          req.user.follow
+            .map(value => {
+              return value.id;
+            })
+            .indexOf(response[0]._id.toString()) === -1
+      });
     })
-
-  }
-  )
+    .catch(err => {
+      console.log(err);
+    });
 });
 
 /* GET movies search */
@@ -67,7 +75,25 @@ router.post("/movies/search", (req, res, next) => {
       console.log(genresID);
 
       const getMovies = await NetflixAPI.getSuggestions(genresID);
-      res.render("movieDetailsRoulette", { movie: getMovies });
+      User.findById(req.user._id).then(user => {
+        console.log(user);
+        let userMovies = user.watchlist
+          .map(value => {
+            return value.netflixId;
+          })
+          .concat(
+            user.seen.map(value => {
+              return value.netflixId;
+            })
+          );
+
+        const filtered = getMovies.filter(value => {
+          if (userMovies.indexOf(value.netflixid) < 0) {
+            return value;
+          }
+        });
+        res.render("movieDetailsRoulette", { movie: filtered });
+      });
       //res.redirect(`/movies/details/${getMovies[0].netflixid}`);
     })
     .catch(err => {
@@ -75,32 +101,34 @@ router.post("/movies/search", (req, res, next) => {
     });
 });
 
-router.post('/movies/seen/', (req, res, next) => {
+router.post("/movies/seen/", (req, res, next) => {
   const movieWatched = req.body;
   User.find({
-      _id: req.session.passport.user
-    })
-    .then(user => {
-      let newSeen = [...user[0].seen];
-      newSeen.push(movieWatched);
-      User.findByIdAndUpdate(
-          req.session.passport.user, {
-            $set: {
-              seen: newSeen
-            }
-          }, {
-            new: true
-          })
-        .then(user => {
-          console.log(user)
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    })
+    _id: req.session.passport.user
+  }).then(user => {
+    let newSeen = [...user[0].seen];
+    newSeen.push(movieWatched);
+    User.findByIdAndUpdate(
+      req.session.passport.user,
+      {
+        $set: {
+          seen: newSeen
+        }
+      },
+      {
+        new: true
+      }
+    )
+      .then(user => {
+        console.log(user);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
 });
 
-router.post('/movies/watchlist/', (req, res, next) => {
+router.post("/movies/watchlist/", (req, res, next) => {
   const movieToWatch = req.body;
   User.find({
     _id: req.session.passport.user
@@ -140,28 +168,36 @@ router.get("/movies/details/:id", async (req, res, next) => {
   }
 });
 
-router.post("/profile/follow/:userid", (req, res, next) => {
-  User.findByIdAndUpdate(
-    req.session.passport.user,
-    {
-      $push: {
-        follow: req.params.userid
-      }
-    },
-    {
-      new: true
-    }
-  )
+router.post("/profile/follow/", (req, res, next) => {
+  const personToFollow = req.body;
+  console.log("this is the person to follow", personToFollow);
+  User.find({
+    _id: req.session.passport.user
+  })
     .then(user => {
-      console.log(user);
+      let newFriends = [...user[0].follow];
+      console.log("newFriendsArray", newFriends);
+      newFriends.push(personToFollow);
+      console.log("user before execution", user);
+      console.log("updatedArray", newFriends);
+      User.findByIdAndUpdate(
+        req.session.passport.user,
+        {
+          $set: {
+            follow: newFriends
+          }
+        },
+        {
+          new: true
+        }
+      ).then(user => {
+        console.log("user after execution", user);
+        res.send(user);
+      });
     })
     .catch(err => {
       console.log(err);
     });
 });
 
-/* router.get("/movies/details", (req, res, next) => {
-  res.render("movieDetails");
-});
- */
 module.exports = router;
