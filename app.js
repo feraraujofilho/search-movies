@@ -25,7 +25,7 @@ const User = require("./models/User");
 const bcrypt = require("bcrypt");
 
 /* -------------------------------------------- */
-hbs.registerHelper ("json", (context) =>{
+hbs.registerHelper("json", (context) => {
   return JSON.parse(context)
 })
 // CONNECT TO DATABASE
@@ -33,8 +33,9 @@ hbs.registerHelper ("json", (context) =>{
 mongoose
   .connect(
     process.env.MONGODB_URI ||
-      `mongodb://${process.env.DATABASE_CONNECTION}/NetflixSearch`,
-    { useNewUrlParser: true }
+    `mongodb://${process.env.DATABASE_CONNECTION}/NetflixSearch`, {
+      useNewUrlParser: true
+    }
   )
   .then(x => {
     console.log(
@@ -71,7 +72,7 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET,
     cookie: {
-      maxAge: 48 * 60 * 60 //48h cookie
+      maxAge: 24 * 60 * 60 * 1000,
     },
     resave: false,
     saveUninitialized: false,
@@ -124,8 +125,8 @@ passport.deserializeUser((id, done) => {
 passport.use(
   new LocalStrategy((username, password, done) => {
     User.findOne({
-      username
-    })
+        username
+      })
       .then(user => {
         // no username match
         if (!user) {
@@ -155,18 +156,16 @@ passport.use(
 
 // facebook strategy --> auth with passport
 passport.use(
-  new FacebookStrategy(
-    {
+  new FacebookStrategy({
       clientID: process.env.FACEBOOK_APP_ID,
       clientSecret: process.env.FACEBOOK_APP_SECRET,
       callbackURL: "http://localhost:3030/auth/facebook/callback"
     },
-    function(profile, cb) {
-      User.findOrCreate(
-        {
+    function (profile, cb) {
+      User.findOrCreate({
           facebookId: profile.id
         },
-        function(err, user) {
+        function (err, user) {
           return cb(err, user);
         }
       );

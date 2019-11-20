@@ -22,7 +22,7 @@
     {{#if userProfile.seen}}
     <h5 class="list-group-item">Movies I've seen:</h5>
     <ul>
-      {{#each user.seen}}
+      {{#each userProfile.seen}}
       <li><a href="">{{title}}</a></li>
       {{/each}}
     </ul>
@@ -33,13 +33,6 @@
 
 
 <script>
-  const theBtn = document.getElementById("followbtn")
-  if (user._id !== loggedIn._id) {
-    theBtn.style.display = "block"
-  }
-  else (
-    theBtn.style.display = "none"
-  )
   const follow = (id) => {
     axios
       .post(`/profile/follow/${id}`)
