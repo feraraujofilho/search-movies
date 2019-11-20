@@ -78,15 +78,17 @@ router.get("/login", (req, res, next) => {
 });
 
 
-router.post("/login", function(req, res, next) {
-  passport.authenticate("local", function(err, user, info) {
+router.post("/login", function (req, res, next) {
+  passport.authenticate("local", function (err, user, info) {
     if (err) {
       return next(err);
     }
     if (!user) {
-      return res.render("auth/login.hbs", {message: "Username or Password Incorreçct"});
+      return res.render("auth/login.hbs", {
+        message: "Username or Password Incorreçct"
+      });
     }
-    req.logIn(user, function(err) {
+    req.logIn(user, function (err) {
       console.log(user)
       if (err) {
         return next(err);
@@ -96,11 +98,11 @@ router.post("/login", function(req, res, next) {
   })(req, res, next);
 });
 
-// // login facebook
-// router.get("/auth/facebook", passport.authenticate("facebook"));
+// login facebook
+// router.get("/facebook", passport.authenticate("facebook"));
 
 // router.get(
-//   "/auth/facebook/callback",
+//   "/facebook/callback",
 //   passport.authenticate("facebook", {
 //     failureRedirect: "/login"
 //   }),
@@ -110,21 +112,21 @@ router.post("/login", function(req, res, next) {
 //   }
 // );
 
-// login google
-// app.get(
-//   '/google',
-//   passport.authenticate('google', {
-//     scope: ['profile']
-//   })
-// );
+//login google
+router.get(
+  '/google',
+  passport.authenticate('google', {
+    scope: ['profile']
+  })
+);
 
-// app.get(
-//   '/google/callback',
-//   passport.authenticate('google', {
-//     successRedirect: '/',
-//     failureRedirect: '/auth/login'
-//   })
-// );
+router.get(
+  '/google/callback',
+  passport.authenticate('google', {
+    successRedirect: '/',
+    failureRedirect: '/auth/login'
+  })
+);
 
 /* -------------------------------------------- */
 

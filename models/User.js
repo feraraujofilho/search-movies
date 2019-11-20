@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   username: String,
   password: String,
+  googleId: String,
   follow: [String],
   watchlist: [{
     title: String,
