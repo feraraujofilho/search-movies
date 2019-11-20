@@ -155,6 +155,23 @@ router.post("/movies/watchlist/", (req, res, next) => {
   });
 });
 
+router.post('/movies/watchlist/del', (req, res, next) => {
+  const movieToDelete = req.body.netflixId.toString()
+  User.update({
+      _id: req.session.passport.user
+    }, {
+      $pull: {
+        'watchlist': {
+          netflixId: movieToDelete
+        }
+      }
+    })
+    .then(result => {
+      console.log(result)
+    })
+    .catch(err => console.log(err))
+});
+
 router.get("/movies/details/:id", async (req, res, next) => {
   try {
     const singleMovie = await NetflixAPI.findMovieById(req.params.id);
