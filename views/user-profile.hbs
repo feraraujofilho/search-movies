@@ -3,17 +3,21 @@
     <h4 class="card-title">{{user.username}}'s profile</h4>
   </div>
   <div class="list-group list-group-flush">
+    {{#if user.watchlist}}
     <h5 class="list-group-item">On my watch list:</h5>
     <ul>
-      {{#each toWatch}}
-      <li>{{toWatch.title}}</li>
+      {{#each user.watchlist}}
+      <li><a href="">{{title}}</a></li>
       {{/each}}
     </ul>
+    {{/if}}
+    {{#if user.seen}}
     <h5 class="list-group-item">Movies I've seen:</h5>
     <ul>
-      {{#each seen}}
-      <li>{{seen.title}}</li>
+      {{#each user.seen}}
+      <li><a href="">{{title}}</a></li>
       {{/each}}
     </ul>
+    {{/if}}
   </div>
 </div>

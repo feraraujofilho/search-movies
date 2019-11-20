@@ -61,18 +61,18 @@ router.post("/movies/search", (req, res, next) => {
     });
 });
 
-router.post('/movies/seen/:id', (req, res, next) => {
-  const movieWatched = req.params.id;
+router.post('/movies/seen/', (req, res, next) => {
+  const movieWatched = req.body;
   User.find({
       _id: req.session.passport.user
     })
     .then(user => {
-      let newArray = [...user[0].seen];
-      newArray.push(movieWatched);
+      let newSeen = [...user[0].seen];
+      newSeen.push(movieWatched);
       User.findByIdAndUpdate(
           req.session.passport.user, {
             $set: {
-              seen: newArray
+              seen: newSeen
             }
           }, {
             new: true
@@ -86,8 +86,8 @@ router.post('/movies/seen/:id', (req, res, next) => {
     })
 });
 
-router.post('/movies/watchlist/:id', (req, res, next) => {
-  const movieToWatch = req.params.id;
+router.post('/movies/watchlist/', (req, res, next) => {
+  const movieToWatch = req.body;
   User.find({
       _id: req.session.passport.user
     })
