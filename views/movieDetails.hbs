@@ -1,5 +1,5 @@
 
-{{#each movie}}
+{{movie}}
 <div>
   <h1>{{title}}</h1>
   <p>Synopsis: {{synopsis}}</p>
@@ -10,10 +10,5 @@
   <a href="https://www.netflix.com/title/{{this.netflixid}}">Watch now</a>
   <a href="/">Add to "Already Watched" List</a>
 </div>
-{{/each}}
+{{each}}
 
-<script>
-  console.log()
-  let test = {{movie[0]}}
-  console.log(test)
-</script>

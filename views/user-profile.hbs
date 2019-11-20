@@ -49,6 +49,8 @@
   let btnTry = document.getElementById("followbtn")
   const follow = (id, username) => {
     console.log("test: ", username)
+    //axios
+    //.post(`/profile/follow/${id}`)
     axios({
       method: 'post',
       url: '/profile/follow/',
