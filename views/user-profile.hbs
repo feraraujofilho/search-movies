@@ -18,7 +18,7 @@
     <h5 class="list-group-item">On my watch list:</h5>
     <ul>
       {{#each userProfile.watchlist}}
-      <li><a id={{netflixId}} href="">{{title}}</a>
+      <li id={{netflixId}}><a  href="">{{title}}</a>
         <button onclick="removeFromWatchlist({{this.netflixId}})">Delete</button>
         <button onclick="moveToSeen({{this.netflixId}})">Watched</button>
       </li>
@@ -67,8 +67,6 @@
       .catch(err => {
         console.log(err)
       })
-<<<<<<< HEAD
-=======
   };
 
 
@@ -114,7 +112,6 @@
     //}
     //})
 
->>>>>>> userLists
 
   }
 
