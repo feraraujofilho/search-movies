@@ -29,7 +29,6 @@ router.get("/profile/:id", loginCheck(), (req, res, next) => {
   console.log(req.user);
   User.find({
     _id: req.params.id
-<<<<<<< HEAD
   })
     .then(response => {
       res.render("user-profile.hbs", {
@@ -48,17 +47,6 @@ router.get("/profile/:id", loginCheck(), (req, res, next) => {
     .catch(err => {
       console.log(err);
     });
-=======
-  }).then(response => {
-    console.log(response)
-    res.render("user-profile.hbs", {
-      loggedIn: req.user,
-      user: req.user,
-      userProfile: response[0]
-    })
-
-  })
->>>>>>> 6054887ede3e92673d2f4c04845cf33037f479ee
 });
 
 /* GET movies search */
