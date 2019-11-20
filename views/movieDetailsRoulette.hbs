@@ -1,5 +1,4 @@
 {{#each movie}}
-<div class="movie-block">
   <div class="movie-details">
     <h1>{{this.title}}</h1>
     <div class="movies-info">
@@ -17,9 +16,12 @@
     </div>
     <a class="btn-movie" href="https://www.netflix.com/title/{{this.netflixid}}">Watch now</a>
     <button class="btn-movie" onclick="next()">Get New Suggestion</button>
+    {{!-- <div>
+      <iframe width="640" height="360"
+        src="https://www.youtube.com/embed/?listType=search&list={{this.title}}_trailer&autoplay=1"/>
+    </div> --}}
   </div>
   {{/each}}
-</div>
 
 
 

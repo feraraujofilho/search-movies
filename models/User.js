@@ -5,7 +5,8 @@ const userSchema = new Schema({
   username: String,
   password: String,
   watchlist: [String],
-  seen: [String]
+  seen: [String],
+  follow: [String]
 });
 
 const User = mongoose.model('User', userSchema);

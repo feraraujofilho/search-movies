@@ -1,19 +1,50 @@
 <div class="card my-profile" style="width: 18rem;">
   <div class="card-body">
-    <h4 class="card-title">{{user.username}}'s profile</h4>
+    <h4 class="card-title">{{userProfile.username}}'s profile</h4>
+  </div>
+  <h3>{{userProfile._id}}</h3>
+  <div class="followed">
+    <ul>
+      {{#each userProfile.follow}}
+      <li>{{this}}</li>
+      {{/each}}
+    </ul>
   </div>
   <div class="list-group list-group-flush">
     <h5 class="list-group-item">On my watch list:</h5>
     <ul>
-      {{#each toWatch}}
-      <li>{{toWatch.title}}</li>
+      {{#each userProfile.toWatch}}
+      <li>{{this}}</li>
       {{/each}}
     </ul>
     <h5 class="list-group-item">Movies I've seen:</h5>
     <ul>
-      {{#each seen}}
-      <li>{{seen.title}}</li>
+      {{#each userProfile.seen}}
+      <li>{{this}}</li>
       {{/each}}
     </ul>
+    <button id="followbtn" onclick="follow({{user._id}})">Follow Friend</button>
   </div>
 </div>
+
+
+<script>
+  const theBtn = document.getElementById("followbtn")
+  if (user._id !== loggedIn._id) {
+    theBtn.style.display = "block"
+  }
+  else (
+    theBtn.style.display = "none"
+  )
+  const follow = (id) => {
+    axios
+      .post(`/profile/follow/${id}`)
+      .then(response => {
+        console.log(response);
+        next();
+      })
+      .then(err => {
+        console.log(err)
+      })
+  }
+</script>
