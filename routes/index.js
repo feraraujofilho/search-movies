@@ -75,35 +75,33 @@ router.post("/movies/search", (req, res, next) => {
     });
 });
 
-router.post("/movies/seen/:id", (req, res, next) => {
-  const movieWatched = req.params.id;
+router.post('/movies/seen/', (req, res, next) => {
+  const movieWatched = req.body;
   User.find({
-    _id: req.session.passport.user
-  }).then(user => {
-    let newArray = [...user[0].seen];
-    newArray.push(movieWatched);
-    User.findByIdAndUpdate(
-      req.session.passport.user,
-      {
-        $set: {
-          seen: newArray
-        }
-      },
-      {
-        new: true
-      }
-    )
-      .then(user => {
-        console.log(user);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  });
+      _id: req.session.passport.user
+    })
+    .then(user => {
+      let newSeen = [...user[0].seen];
+      newSeen.push(movieWatched);
+      User.findByIdAndUpdate(
+          req.session.passport.user, {
+            $set: {
+              seen: newSeen
+            }
+          }, {
+            new: true
+          })
+        .then(user => {
+          console.log(user)
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    })
 });
 
-router.post("/movies/watchlist/:id", (req, res, next) => {
-  const movieToWatch = req.params.id;
+router.post('/movies/watchlist/', (req, res, next) => {
+  const movieToWatch = req.body;
   User.find({
     _id: req.session.passport.user
   }).then(user => {

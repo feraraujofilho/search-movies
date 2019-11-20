@@ -11,19 +11,23 @@
     </ul>
   </div>
   <div class="list-group list-group-flush">
+    {{#if userProfile.watchlist}}
     <h5 class="list-group-item">On my watch list:</h5>
     <ul>
-      {{#each userProfile.toWatch}}
-      <li>{{this}}</li>
+      {{#each userProfile.watchlist}}
+      <li><a href="">{{title}}</a></li>
       {{/each}}
     </ul>
+    {{/if}}
+    {{#if userProfile.seen}}
     <h5 class="list-group-item">Movies I've seen:</h5>
     <ul>
-      {{#each userProfile.seen}}
-      <li>{{this}}</li>
+      {{#each user.seen}}
+      <li><a href="">{{title}}</a></li>
       {{/each}}
     </ul>
-    <button id="followbtn" onclick="follow({{user._id}})">Follow Friend</button>
+    {{/if}}
+        <button id="followbtn" onclick="follow({{user._id}})">Follow Friend</button>
   </div>
 </div>
 
