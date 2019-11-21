@@ -1,6 +1,6 @@
 body {
-  padding: 15px;
-  font-family: 'Poppins', sans-serif;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
   background-color: black; }
 
 /*-----------------------------------------*/
@@ -10,11 +10,17 @@ body {
   align-items: center; }
 
 .background {
-  background-image: url("../images/netflix-banner.jpeg");
+  background-image: url("../images/Banner.jpg");
+  height: 90vh;
+  width: 100%;
   background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  height: 500px; }
+  background-size: 100% 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  color: white; }
 
 .feature-container {
   display: flex;
@@ -41,14 +47,16 @@ body {
 
 /*-----------------------------------------*/
 .signup-login-container {
+  height: 90vh;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  width: 60%;
-  background-image: url("../images/form-background.jpeg");
-  background-size: cover;
-  color: white;
-  margin-top: 30px; }
+  flex-direction: column;
+  text-align: center;
+  color: white; }
 
 .signup-login-container h3 {
   text-align: center;
@@ -87,10 +95,10 @@ body {
   background-color: #e50914;
   padding: 1vh 1.5vh;
   border-radius: 10px;
-  -webkit-appearance: button;
   color: white;
-  border: 0;
-  padding: 1.5vh; }
+  border: 0; }
+  .btn-movie:hover {
+    color: white; }
 
 .synopsis {
   display: flex;
@@ -106,11 +114,59 @@ body {
 
 .description {
   display: flex;
-  align-items: center; }
+  align-items: center;
+  margin-top: 1vh; }
 
 .description p {
-  padding: 2vh;
-  display: flex;
   text-align: center; }
+
+.feature {
+  padding: 3vh 5vh;
+  text-align: center;
+  color: white; }
+
+.featureimg {
+  width: 40%;
+  border-radius: 20px;
+  margin: 10px; }
+
+.searchform {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  height: 80vh; }
+
+.headerBanner {
+  width: 40%; }
+
+h1 {
+  text-align: center; }
+
+.btn-movie-result {
+  background-color: #e50914;
+  padding: 1vh 1.5vh;
+  border-radius: 10px;
+  color: white;
+  border: 0; }
+  .btn-movie-result:hover {
+    color: white; }
+
+.netfliximg {
+  width: 90px;
+  border-radius: 10px; }
+
+.btnnetflix {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  padding: 2vh; }
+
+.bigcom {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin: 3vh; }
 
 /*# sourceMappingURL=style.css.map */

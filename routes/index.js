@@ -28,7 +28,8 @@ router.get("/community", loginCheck(), (req, res, next) => {
   User.find({})
     .then(document => {
       res.render("community.hbs", {
-        people: document
+        people: document,
+        loggedIn: req.user
       });
     })
     .catch(err => {
@@ -102,7 +103,8 @@ router.post("/movies/search", (req, res, next) => {
           }
         });
         res.render("movieDetailsRoulette", {
-          movie: filtered
+          movie: filtered,
+          loggedIn: req.user
         });
       });
     })

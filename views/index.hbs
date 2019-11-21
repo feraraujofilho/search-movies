@@ -1,25 +1,39 @@
-<div class="container index">
-  <div class="container background">
-
-  </div>
-
-  <div class="container feature-container">
-    <div class="row feature-row">
-      <div class="feature-el col-sm-12 col-md-4">
-        <h4>Find movies</h4>
-        <p>Browse the Netflix movie selection by genre to find the highest rated movies.
-        </p>
+<div class="homepage row">
+  <section class="container-fluid section1 background">
+    <div class="headerBanner">
+      <h1>Movie Match</h1>
+      <p>The easiest way to find the perfect movie to watch tonight</p>
+      {{#unless loggedIn}}
+      <div class="row justify-content-around">
+        <a class="btn-movie" href="/auth/login">Login</a>
+        <a class="btn-movie" href="/auth/signup">Sign Up</a>
       </div>
-      <div class="feature-el col-sm-12 col-md-4">
-        <h4>Connect with friends</h4>
-        <p>Follow your friends - share your favorite movies and get inspired by theirs.
-        </p>
-      </div>
-      <div class="feature-el col-sm-12 col-md-4">
-        <h4>Get inspired</h4>
-        <p>Discover new movies and genres by our Netflix suggestions.
-        </p>
-      </div>
+      {{/unless}}
     </div>
+  </section>
+  <div class="feature col-12">
+    <img class="featureimg" src="https://images.unsplash.com/photo-1567606404787-ebd010176fdf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1049&q=80" alt="feature1">
+    <div class="sidetext">
+    <h4>Find movies</h4>
+    <p>Browse the Netflix movie selection by genre to find the highest rated movies.
+    </p>
+    </div>
+  </div>
+  <div class="feature col-12">
+    <div class="sidetext">
+      <img class="featureimg"
+        src="https://images.unsplash.com/photo-1551612084-0fdf19cb8f72?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80"
+        alt="friends">
+    <h4>Connect with friends</h4>
+    <p>Follow your friends - share your favorite movies and get inspired by theirs.
+    </p>
+    </div>
+  </div>
+  <div
+  class="feature col-12">
+  <img class="featureimg" src="https://images.unsplash.com/photo-1461151304267-38535e780c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1190&q=80" alt="discoverMovies">
+    <h4>Get inspired</h4>
+    <p>Discover new movies and genres by our Netflix suggestions.
+    </p>
   </div>
 </div>

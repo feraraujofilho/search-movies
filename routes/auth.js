@@ -33,43 +33,41 @@ router.post("/signup", (req, res, next) => {
     return;
   }
   User.findOne({
-      username
-    }).then(match => {
-      if (match) {
-        res.render("auth/signup.hbs", {
-          message: "This username is already taken"
-        });
-        return;
-      } else {
-        // encrypt password
-        bcrypt
-          .genSalt()
-          .then(salt => {
-            return bcrypt.hash(password, salt);
-          })
-          .then(hash => {
-            // create new user in db
-            return User.create({
-              username: username,
-              password: hash
-            });
-          })
-          .then(newUser => {
-            // log in new user with passport
-            req.login(newUser, err => {
-              if (err) {
-                next(err);
-              } else {
-                req.user = newUser;
-                res.redirect(`/profile/${newUser._id}`);
-              }
-            });
+    username
+  }).then(match => {
+    if (match) {
+      res.render("auth/signup.hbs", {
+        message: "This username is already taken"
+      });
+      return;
+    } else {
+      // encrypt password
+      bcrypt
+        .genSalt()
+        .then(salt => {
+          return bcrypt.hash(password, salt);
+        })
+        .then(hash => {
+          // create new user in db
+          return User.create({
+            username: username,
+            password: hash
           });
-      }
-    })
-    .catch(err => {
-      console.log(err);
-    })
+        })
+        .then(newUser => {
+          // log in new user with passport
+          req.login(newUser, err => {
+            if (err) {
+              next(err);
+            } else {
+              req.user = newUser;
+              res.redirect = "/movies/search";
+              //res.redirect(`/profile/${newUser._id}`);
+            }
+          });
+        });
+    }
+  });
 });
 
 /* -------------------------------------------- */
@@ -97,7 +95,8 @@ router.post("/login", function (req, res, next) {
       if (err) {
         return next(err);
       }
-      return res.redirect("/profile/" + user._id);
+      return res.redirect("/movies/search");
+      //return res.redirect("/profile/" + user._id);
     });
   })(req, res, next);
 });
