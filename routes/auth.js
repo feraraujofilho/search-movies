@@ -13,12 +13,7 @@ router.get("/signup", (req, res, next) => {
 });
 
 router.post("/signup", (req, res, next) => {
-  const {
-    username,
-    password
-  } = req.body;
-  console.log(username)
-  console.log(password);
+  const { username, password } = req.body;
   // restriction checks
   if (!username) {
     res.render("auth/signup.hbs", {
@@ -54,15 +49,13 @@ router.post("/signup", (req, res, next) => {
             password: hash
           });
         })
-        .then(newUser => {
+        .then(signedUpUser => {
           // log in new user with passport
-          req.login(newUser, err => {
+          req.login(signedUpUser, err => {
             if (err) {
               next(err);
             } else {
-              req.user = newUser;
-              res.redirect = "/movies/search";
-              //res.redirect(`/profile/${newUser._id}`);
+              res.redirect("/movies/search");;
             }
           });
         });
