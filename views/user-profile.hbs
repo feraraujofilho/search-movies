@@ -1,114 +1,149 @@
+{{#if showDelete}}
 {{!-- PEOPLE I FOLLOW --}}
-<div class="card my-profile" style="width: 18rem;">
-  <div class="card-body">
-    <h4 class="card-title">{{userProfile.username}}'s profile</h4>
+<div class="card my-profile">
+  <div class="card-body profile-header">
+    <h4 class="card-title">My profile</h4>
   </div>
-  <h3>{{userProfile._id}}</h3>
-  <div class="followed">
+  <div class="followed profile-block">
+    <h5 class="list-group-item">Friends I follow:</h5>
     <ul>
       {{#each userProfile.follow}}
       <li><a href="/profile/{{this.id}}">{{this.username}}</a></li>
       {{/each}}
     </ul>
   </div>
-
-
   {{!-- MY WATCHLIST --}}
-  {{!-- <div class="list-group list-group-flush">
-    {{#if userProfile.watchlist}} --}}
-  <h5 class="list-group-item">On my watch list:</h5>
-  <ul>
-    {{#each userProfile.watchlist}}
-    <li id={{netflixId}}><a id='{{title}}' href="https://www.netflix.com/title/{{netflixId}}">{{title}}</a>
+  <div class="my-watchlist profile-block">
+    <h5 class="list-group-item">On my watch list:</h5>
+    <ul>
+      {{#each userProfile.watchlist}}
+      <li id={{netflixId}}>
+        <div class="movieDiv">
+          <a class="title" id='{{title}}'>{{title}}</a>
+          <a class="btnnetflix" href="https://www.netflix.com/title/{{this.netflixId}}" target="_blank">
+            <img class="netfliximg" src="https://images-eu.ssl-images-amazon.com/images/I/616QXs8yg0L.png"
+              alt="netflixbutton">
+          </a>
+        </div>
 
-      <button onclick="removeFromWatchlist({{this.netflixId}})">Delete</button>
-      <button
-        onclick="moveToSeen(`{{this.title}}`) ; removeFromWatchlist({{this.netflixId}});addToSeen({{this.netflixId}},`{{this.title}}`)">Watched</button>
+        <button
+          onclick="moveToSeen(`{{this.title}}`) ; removeFromWatchlist({{this.netflixId}});addToSeen({{this.netflixId}},`{{this.title}}`)">Watched</button>
+        <button onclick="removeFromWatchlist({{this.netflixId}})">Delete</button>
+        {{/each}}
+    </ul>
+    {{!-- MOVIES ALREADY SEEN --}}
+    <div class="my-seen-list profile-block">
+      <h5 class=" list-group-item">Movies I've seen:</h5>
+      <ul id="seenMovies">
+        {{#each userProfile.seen}}
+        <li id={{netflixId}}><a href="https://www.netflix.com/title/{{netflixId}}" target="_blank">{{title}}</a>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+    {{else}}
+    {{!-- PEOPLE THEY FOLLOW --}}
+    <div class="card my-profile">
+      <div class="card-body profile-header">
+        <h4 class="card-title">{{userProfile.username}}'s profile</h4>
+      </div>
+      <div class="followed profile-block">
+        <h5 class="list-group-item">Friends {{userProfile.username}} follows:</h5>
+        <ul>
+          {{#each userProfile.follow}}
+          <li><a href="/profile/{{this.id}}">{{this.username}}</a></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{!-- THEIR WATCHLIST --}}
+      <div class="my-watchlist profile-block">
+        <h5 class="list-group-item">On {{userProfile.username}}'s watch list:</h5>
+        <ul>
+          {{#each userProfile.watchlist}}
+          <li id={{netflixId}}>
+            <div class="movieDiv">
+              <a class="title" id='{{title}}'>{{title}}</a>
+              <a class="btnnetflix" href="https://www.netflix.com/title/{{this.netflixId}}" target="_blank">
+                <img class="netfliximg" src="https://images-eu.ssl-images-amazon.com/images/I/616QXs8yg0L.png"
+                  alt="netflixbutton">
+              </a>
+            </div>
+            {{/each}}
+        </ul>
+        {{!-- MOVIES ALREADY SEEN --}}
+        <div class="my-seen-list profile-block">
+          <h5 class=" list-group-item">Movies {{userProfile.username}} has seen:</h5>
+          <ul id="seenMovies">
+            {{#each userProfile.seen}}
+            <li id={{netflixId}}><a href="https://www.netflix.com/title/{{netflixId}}" target="_blank">{{title}}</a>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+        {{/if}}
 
-    </li>
-    {{/each}}
-  </ul>
-  {{!-- {{/if}} --}}
-
-  {{!-- MOVIES ALREADY SEEN --}}
-  {{!-- {{#if userProfile.seen}} --}}
-  <h5 class=" list-group-item">Movies I've seen:</h5>
-  <ul id="seenMovies">
-    {{#each userProfile.seen}}
-    <li><a href="https://www.netflix.com/title/{{netflixId}}">{{title}}</a>
-    </li>
-    {{/each}}
-  </ul>
-
-
-  {{#if showFollow}}
-  <button id="followbtn" onclick="follow('{{userProfile._id}}','{{userProfile.username}}')"> Follow Friend </button>
-  {{/if}}
-</div>
-</div>
-
-<script>
-  let btnTry = document.getElementById("followbtn")
-  const follow = (id, username) => {
-    console.log("test: ", username)
-    //axios
-    //.post(`/profile/follow/${id}`)
-    axios({
-      method: 'post',
-      url: '/profile/follow/',
-      data: {
-        id,
-        username
-      }
-    })
-      .then(response => {
-        btnTry.style.display = 'none'
-        console.log(response);
-        console.log("oi", btnTry)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  };
+        <script>
+          let btnTry = document.getElementById("followbtn")
+          const follow = (id, username) => {
+            console.log("test: ", username)
+            //axios
+            //.post(`/profile/follow/${id}`)
+            axios({
+              method: 'post',
+              url: '/profile/follow/',
+              data: {
+                id,
+                username
+              }
+            })
+              .then(response => {
+                btnTry.style.display = 'none'
+                console.log(response);
+                console.log("oi", btnTry)
+              })
+              .catch(err => {
+                console.log(err)
+              })
+          };
 
 
-  const removeFromWatchlist = (netflixId) => {
-    axios({
-      method: 'post',
-      url: '/movies/watchlist/del',
-      data: {
-        netflixId,
-      }
-    })
-    const deletedFromList = document.getElementById(netflixId);
-    deletedFromList.style.display = "none";
-  };
+          const removeFromWatchlist = (netflixId) => {
+            axios({
+              method: 'post',
+              url: '/movies/watchlist/del',
+              data: {
+                netflixId,
+              }
+            })
+            const deletedFromList = document.getElementById(netflixId);
+            deletedFromList.style.display = "none";
+          };
 
-  const moveToSeen = (title) => {
-    const moveElement = document.getElementById(title);
-    const newLiTag = document.createElement("li");
-    newLiTag.appendChild(moveElement);
-    //console.log('new tag:    ', newLiTag)
+          const moveToSeen = (title) => {
+            const moveElement = document.getElementById(title);
+            const newLiTag = document.createElement("li");
+            newLiTag.appendChild(moveElement);
+            //console.log('new tag:    ', newLiTag)
 
-    const seenMovieList = document.querySelector("#seenMovies");
-    //console.log('seenMovieList:     ', seenMovieList)
-    seenMovieList.appendChild(newLiTag);
-  };
+            const seenMovieList = document.querySelector("#seenMovies");
+            //console.log('seenMovieList:     ', seenMovieList)
+            seenMovieList.appendChild(newLiTag);
+          };
 
-  const addToSeen = (netflixId, title) => {
-    axios({
-      method: 'post',
-      url: '/movies/seen/',
-      data: {
-        netflixId,
-        title
-      }
-    })
-      .then(response => {
-        console.log(response);
-      })
-      .then(err => {
-        console.log(err)
-      })
-  };
-</script>
+          const addToSeen = (netflixId, title) => {
+            axios({
+              method: 'post',
+              url: '/movies/seen/',
+              data: {
+                netflixId,
+                title
+              }
+            })
+              .then(response => {
+                console.log(response);
+              })
+              .then(err => {
+                console.log(err)
+              })
+          };
+        </script>

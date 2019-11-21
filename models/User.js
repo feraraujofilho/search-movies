@@ -6,18 +6,14 @@ const userSchema = new Schema({
   password: String,
   follow: [Object],
   googleId: String,
-  watchlist: [
-    {
-      title: String,
-      netflixId: String
-    }
-  ],
-  seen: [
-    {
-      title: String,
-      netflixId: String
-    }
-  ],
+  watchlist: [{
+    title: String,
+    netflixId: String
+  }],
+  seen: [{
+    title: String,
+    netflixId: String
+  }],
   role: {
     type: String,
     enum: ["admin", "regular"],
