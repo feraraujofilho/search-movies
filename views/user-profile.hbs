@@ -46,6 +46,10 @@
     <div class="card my-profile">
       <div class="card-body profile-header">
         <h4 class="card-title">{{userProfile.username}}'s profile</h4>
+        {{#if showFollow}}
+        <button id="followbtn" onclick="follow('{{userProfile._id}}','{{userProfile.username}}')"> Follow Friend
+        </button>
+        {{/if}}
       </div>
       <div class="followed profile-block">
         <h5 class="list-group-item">Friends {{userProfile.username}} follows:</h5>
@@ -81,6 +85,7 @@
           </ul>
         </div>
         {{/if}}
+
 
         <script>
           let btnTry = document.getElementById("followbtn")
