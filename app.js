@@ -176,9 +176,11 @@ passport.use(
 // google strategy --> auth with passport
 passport.use(
   new GoogleStrategy({
-      clientID: process.env.GOOGLE_CLIENT_ID, //not registered yet
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET, //not registered yet
-      callbackURL: "http://localhost:3000/auth/google/callback" //not registered yet
+      clientID: process.env.GOOGLE_CLIENT_ID, 
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET, 
+      callbackURL: `http://${process.env.GOOGLEURL}/auth/google/callback` 
+
+     
     },
     (request, accessToken, refreshToken, profile, done) => {
       User.findOne({
