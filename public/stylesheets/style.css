@@ -169,4 +169,46 @@ h1 {
   align-items: start;
   margin: 3vh; }
 
+.my-profile {
+  display: flex;
+  background-color: black; }
+
+.my-profile li a:not([href]) {
+  color: #e50914; }
+  .my-profile li a:not([href]):hover {
+    color: #e50914; }
+
+.my-profile li a {
+  color: #e50914; }
+
+.my-profile h4 {
+  color: #BEBABA; }
+
+.list-group-item {
+  background-color: black;
+  color: #BEBABA; }
+
+.profile-block ul li {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid gray;
+  width: 65%; }
+
+.profile-block a {
+  margin: 10px 0 10px 0px; }
+
+.profile-block button {
+  display: flex;
+  color: gray;
+  font-size: 0.7em;
+  margin: 10px 5px 10px 0px;
+  width: 20%;
+  background-color: black;
+  border: 0; }
+
+.movieDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+
 /*# sourceMappingURL=style.css.map */

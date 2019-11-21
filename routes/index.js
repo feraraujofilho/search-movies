@@ -43,11 +43,13 @@ router.get("/profile/:id", loginCheck(), (req, res, next) => {
       _id: req.params.id
     })
     .then(response => {
+      console.log('user: ', req.user)
+      console.log('userProfile: ', req.user._id.toString() === response[0]._id.toString())
       res.render("user-profile.hbs", {
         userProfile: response[0],
         user: req.user,
         loggedIn: req.user,
-        showDelete: req.user._id.toString() == response[0]._id.toString(),
+        showDelete: req.user._id.toString() === response[0]._id.toString(),
         showFollow: req.user._id.toString() != response[0]._id.toString() &&
           req.user.follow
           .map(value => {
@@ -55,6 +57,7 @@ router.get("/profile/:id", loginCheck(), (req, res, next) => {
           })
           .indexOf(response[0]._id.toString()) === -1
       });
+
     })
     .catch(err => {
       console.log(err);
