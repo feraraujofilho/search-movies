@@ -6,30 +6,41 @@
     <p class="synopsis">{{this.synopsis}}</p>
   </div>
   <div class="description">
-    <p><strong>RATING: </strong> {{this.rating}}</p>
-    <p><strong>YEAR: </strong> {{this.released}}</p>
-    <p><strong>RUNTIME: </strong> {{this.runtime}}</p>
+    <div class="singleInfo col">
+      <h5><strong>RATING </strong></h5>
+      <p>{{this.rating}}</p>
+    </div>
+    <div class="singleInfo col">
+      <h5><strong>YEAR </strong> </h5>
+      <p>{{this.released}}</p>
+    </div>
+    <div class="singleInfo col">
+      <h5><strong>RUNTIME </strong></h5>
+      <p>{{this.runtime}}</p>
+    </div>
   </div>
 
 
   <div class="havewatched">
 
-    <button class="btn-movie" id="toSeen"
+    <button class="btn-movie-result" id="toSeen"
       onclick="addToSeen({{this.netflixid}},`{{this.title}}`); disableBtn();">Already
       Watched</button>
 
-    <button class="btn-movie" id="toWatch"
+    <button class="btn-movie-result" id="toWatch"
       onclick="addToWatchList({{this.netflixid}},`{{this.title}}`), disableBtn();">Add to Watch
       List</button>
   </div>
 
-
-  <a class="btn-movie" href="https://www.netflix.com/title/{{this.netflixid}}">Watch now</a>
-  <button class="btn-movie" onclick="next();">Get New Suggestion</button>
-  {{!-- <div>
-      <iframe width="640" height="360"
-        src="https://www.youtube.com/embed/?listType=search&list={{this.title}}_trailer&autoplay=1"/>
-    </div> --}}
+  <a class="btnnetflix" href="https://www.netflix.com/title/{{this.netflixid}}" target="_blank">
+    <img class="netfliximg" src="https://images-eu.ssl-images-amazon.com/images/I/616QXs8yg0L.png" alt="netflixbutton">
+  </a>
+  {{!-- <a class="btn-netflix" href="https://www.netflix.com/title/{{this.netflixid}}"></a><img src="https://images-eu.ssl-images-amazon.com/images/I/616QXs8yg0L.png" alt="netflixbutton"> --}}
+  <button class="btn-movie-result mb-4" onclick="next();stop()">Get New Suggestion</button>
+  <div class="mb-3"> 
+      <iframe width="100%" height="100%"
+        src="https://www.youtube.com/embed/?listType=search&list={{this.title}}_trailer&autoplay=1"/></iframe>
+    </div>
 </div>
 {{/each}}
 
@@ -88,5 +99,8 @@
     toWatchList[showIndex].style.display = 'none';
   };
 
+  //function stop() {
+    //$('iframe').attr('src', $('iframe').attr('src'));
+  //}
 
 </script>

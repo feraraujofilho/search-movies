@@ -51,7 +51,7 @@ const getSuggestions = array => {
         }
 
       }
-      return response.data.ITEMS.slice(0, 50);
+      return response.data.ITEMS.slice(0, 20);
     })
     .catch(error => {
       console.log(error);
