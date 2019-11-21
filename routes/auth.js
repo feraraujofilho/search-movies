@@ -33,45 +33,49 @@ router.post("/signup", (req, res, next) => {
     return;
   }
   User.findOne({
-    username
-  }).then(match => {
-    if (match) {
-      res.render("auth/signup.hbs", {
-        message: "This username is already taken"
-      });
-      return;
-    } else {
-      // encrypt password
-      bcrypt
-        .genSalt()
-        .then(salt => {
-          return bcrypt.hash(password, salt);
-        })
-        .then(hash => {
-          // create new user in db
-          return User.create({
-            username: username,
-            password: hash
-          });
-        })
-        .then(newUser => {
-          // log in new user with passport
-          req.login(newUser, err => {
-            if (err) {
-              next(err);
-            } else {
-              req.user = newUser;
-              res.redirect(`/profile/${newUser._id}`);
-            }
-          });
+      username
+    }).then(match => {
+      if (match) {
+        res.render("auth/signup.hbs", {
+          message: "This username is already taken"
         });
-    }
-  });
+        return;
+      } else {
+        // encrypt password
+        bcrypt
+          .genSalt()
+          .then(salt => {
+            return bcrypt.hash(password, salt);
+          })
+          .then(hash => {
+            // create new user in db
+            return User.create({
+              username: username,
+              password: hash
+            });
+          })
+          .then(newUser => {
+            // log in new user with passport
+            req.login(newUser, err => {
+              if (err) {
+                next(err);
+              } else {
+                req.user = newUser;
+                res.redirect(`/profile/${newUser._id}`);
+              }
+            });
+          });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    })
 });
 
 /* -------------------------------------------- */
 
 // login local
+
 router.get("/login", (req, res, next) => {
   console.log('login successful');
   res.render("auth/login.hbs");
@@ -98,21 +102,9 @@ router.post("/login", function (req, res, next) {
   })(req, res, next);
 });
 
-// login facebook
-// router.get("/facebook", passport.authenticate("facebook"));
-
-// router.get(
-//   "/facebook/callback",
-//   passport.authenticate("facebook", {
-//     failureRedirect: "/login"
-//   }),
-//   function (req, res) {
-//     // Successful authentication, redirect profile
-//     res.redirect("/profile");
-//   }
-// );
 
 //login google
+
 router.get(
   '/google',
   passport.authenticate('google', {
@@ -132,9 +124,11 @@ router.get(
 
 // logout
 router.get("/logout", (req, res, next) => {
-  //req.logout();
   req.session.destroy();
   res.redirect("/");
 });
+
+
+
 
 module.exports = router;

@@ -20,9 +20,11 @@
   <ul>
     {{#each userProfile.watchlist}}
     <li id={{netflixId}}><a id='{{title}}' href="https://www.netflix.com/title/{{netflixId}}">{{title}}</a>
+
       <button onclick="removeFromWatchlist({{this.netflixId}})">Delete</button>
       <button
         onclick="moveToSeen(`{{this.title}}`) ; removeFromWatchlist({{this.netflixId}});addToSeen({{this.netflixId}},`{{this.title}}`)">Watched</button>
+
     </li>
     {{/each}}
   </ul>
