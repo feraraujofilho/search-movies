@@ -1,9 +1,14 @@
-<h2>Our Community</h2>
+<div class="bigcom">
 
+<h2 style="
+    color: white">Our Community</h2>
 
+<div class="list-group">
 {{#each people}}
-<div class="person">
+<div class="person list-group-item list-group-item-action">
 <h3>{{username}}</h3>
-<a href="/profile/{{_id}}">Check more</a>
+<a href="/profile/{{_id}}">Visit Profile</a>
 </div>
 {{/each}}
+</div>
+</div>
