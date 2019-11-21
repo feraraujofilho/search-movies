@@ -27,6 +27,7 @@ router.get("/", (req, res, next) => {
 router.get("/community", loginCheck(), (req, res, next) => {
   User.find({})
     .then(document => {
+      console.log(document[0].seen);
       res.render("community.hbs", {
         people: document,
         loggedIn: req.user
@@ -40,8 +41,8 @@ router.get("/community", loginCheck(), (req, res, next) => {
 // user profile page
 router.get("/profile/:id", loginCheck(), (req, res, next) => {
   User.find({
-      _id: req.params.id
-    })
+    _id: req.params.id
+  })
     .then(response => {
       console.log('user: ', req.user)
       console.log('userProfile: ', req.user._id.toString() === response[0]._id.toString())
@@ -52,10 +53,10 @@ router.get("/profile/:id", loginCheck(), (req, res, next) => {
         showDelete: req.user._id.toString() === response[0]._id.toString(),
         showFollow: req.user._id.toString() != response[0]._id.toString() &&
           req.user.follow
-          .map(value => {
-            return value.id;
-          })
-          .indexOf(response[0]._id.toString()) === -1
+            .map(value => {
+              return value.id;
+            })
+            .indexOf(response[0]._id.toString()) === -1
       });
 
     })
@@ -74,17 +75,17 @@ router.get("/movies/search", loginCheck(), (req, res, next) => {
 router.post("/movies/search", (req, res, next) => {
   const selectedgenre = req.body.genre;
   Genre.find({
-      genre: {
-        $in: selectedgenre
-      }
-    })
+    genre: {
+      $in: selectedgenre
+    }
+  })
     .then(async response => {
       console.log(response);
       const genresID = response
         .map(value => {
           return value.genreIds;
         })
-        .reduce(function (a, b) {
+        .reduce(function(a, b) {
           return a.concat(b);
         }, []);
 
@@ -124,14 +125,16 @@ router.post("/movies/seen/", (req, res, next) => {
     let newSeen = [...user[0].seen];
     newSeen.push(movieWatched);
     User.findByIdAndUpdate(
-        req.session.passport.user, {
-          $set: {
-            seen: newSeen
-          }
-        }, {
-          new: true
+      req.session.passport.user,
+      {
+        $set: {
+          seen: newSeen
         }
-      )
+      },
+      {
+        new: true
+      }
+    )
       .then(user => {
         return;
       })
@@ -149,14 +152,16 @@ router.post("/movies/watchlist/", (req, res, next) => {
     let newWatchlist = [...user[0].watchlist];
     newWatchlist.push(movieToWatch);
     User.findByIdAndUpdate(
-        req.session.passport.user, {
-          $set: {
-            watchlist: newWatchlist
-          }
-        }, {
-          new: true
+      req.session.passport.user,
+      {
+        $set: {
+          watchlist: newWatchlist
         }
-      )
+      },
+      {
+        new: true
+      }
+    )
       .then(user => {
         return;
       })
@@ -166,31 +171,32 @@ router.post("/movies/watchlist/", (req, res, next) => {
   });
 });
 
-router.post('/movies/watchlist/del', (req, res, next) => {
-  const movieToDelete = req.body.netflixId.toString()
-  User.update({
+router.post("/movies/watchlist/del", (req, res, next) => {
+  const movieToDelete = req.body.netflixId.toString();
+  User.update(
+    {
       _id: req.session.passport.user
-    }, {
+    },
+    {
       $pull: {
-        'watchlist': {
+        watchlist: {
           netflixId: movieToDelete
         }
       }
-    })
+    }
+  )
     .then(result => {
       return;
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log(err));
 });
-
-
 
 router.post("/profile/follow/", (req, res, next) => {
   const personToFollow = req.body;
   console.log("this is the person to follow", personToFollow);
   User.find({
-      _id: req.session.passport.user
-    })
+    _id: req.session.passport.user
+  })
     .then(user => {
       let newFriends = [...user[0].follow];
       console.log("newFriendsArray", newFriends);
@@ -198,11 +204,13 @@ router.post("/profile/follow/", (req, res, next) => {
       console.log("user before execution", user);
       console.log("updatedArray", newFriends);
       User.findByIdAndUpdate(
-        req.session.passport.user, {
+        req.session.passport.user,
+        {
           $set: {
             follow: newFriends
           }
-        }, {
+        },
+        {
           new: true
         }
       ).then(user => {
