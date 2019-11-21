@@ -62,14 +62,16 @@ body {
 // signup.hbs
 
 .signup-login-container {
+  height: 90vh;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  width: 60%;
-  background-image: url("../images/form-background.jpeg");
-  background-size: cover;
+  flex-direction: column;
+  text-align: center;
   color: white;
-  margin-top: 30px;
 }
 
 .signup-login-container h3 {
@@ -118,7 +120,7 @@ body {
   color: white;
   border: 0;
   &:hover {
-    color:white
+    color: white;
   }
 }
 
@@ -160,11 +162,11 @@ body {
 
 .searchform {
   display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    height: 80vh
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  height: 80vh;
 }
 
 .headerBanner {
@@ -175,27 +177,32 @@ h1 {
   text-align: center;
 }
 
-.btn-movie-result{
+.btn-movie-result {
   background-color: rgb(229, 9, 20);
   padding: 1vh 1.5vh;
   border-radius: 10px;
   color: white;
   border: 0;
   &:hover {
-    color:white
+    color: white;
   }
 }
 
 .netfliximg {
   width: 90px;
-    border-radius: 10px
+  border-radius: 10px;
 }
 
-.btnnetflix{
+.btnnetflix {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  padding: 2vh;
+}
 
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    padding: 2vh;
-
+.bigcom {
+  display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin: 3vh
 }

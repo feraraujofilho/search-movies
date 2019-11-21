@@ -28,7 +28,10 @@ router.get("/", (req, res, next) => {
 router.get("/community", loginCheck(), (req, res, next) => {
   User.find({})
     .then(document => {
-      res.render("community.hbs", { people: document });
+      res.render("community.hbs", {
+        people: document,
+        loggedIn: req.user
+      });
     })
     .catch(err => {
       console.log(err);
@@ -106,7 +109,10 @@ router.post("/movies/search", (req, res, next) => {
             return value;
           }
         });
-        res.render("movieDetailsRoulette", { movie: filtered });
+        res.render("movieDetailsRoulette", {
+          movie: filtered,
+          loggedIn: req.user
+        });
       });
       //res.redirect(`/movies/details/${getMovies[0].netflixid}`);
     })

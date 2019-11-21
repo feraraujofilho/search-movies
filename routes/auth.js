@@ -61,7 +61,8 @@ router.post("/signup", (req, res, next) => {
               next(err);
             } else {
               req.user = newUser;
-              res.redirect(`/profile/${newUser._id}`);
+              res.redirect = "/movies/search";
+              //res.redirect(`/profile/${newUser._id}`);
             }
           });
         });
@@ -93,7 +94,8 @@ router.post("/login", function (req, res, next) {
       if (err) {
         return next(err);
       }
-      return res.redirect("/profile/" + user._id);
+      return res.redirect("/movies/search");
+      //return res.redirect("/profile/" + user._id);
     });
   })(req, res, next);
 });

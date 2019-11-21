@@ -3,10 +3,12 @@
     <div class="headerBanner">
       <h1>Movie Match</h1>
       <p>The easiest way to find the perfect movie to watch tonight</p>
+      {{#unless loggedIn}}
       <div class="row justify-content-around">
         <a class="btn-movie" href="/auth/login">Login</a>
         <a class="btn-movie" href="/auth/signup">Sign Up</a>
       </div>
+      {{/unless}}
     </div>
   </section>
   <div class="feature col-12">
