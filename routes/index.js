@@ -27,10 +27,28 @@ router.get("/", (req, res, next) => {
 router.get("/community", loginCheck(), (req, res, next) => {
   User.find({})
     .then(document => {
-      console.log(document[0].seen);
+      const seens = document.map(x => x.seen).reduce((a, b) => a.concat(b));
+
+      const counters = seens.reduce((a, b) => {
+        if (a[b.title]) a[b.title] += 1;
+        else a[b.title] = 1;
+        return a;
+      }, {});
+
+      const result = Object.entries(counters)
+        .sort((a, b) => {
+          return b[1] - a[1];
+        })
+        .map(value => {
+          return value.slice(0, -1);
+        }).slice(0,5)
+      console.log(result);
+
+      console.log(document[1].seen);
       res.render("community.hbs", {
         people: document,
-        loggedIn: req.user
+        loggedIn: req.user,
+        bestMovies: result
       });
     })
     .catch(err => {
@@ -44,21 +62,24 @@ router.get("/profile/:id", loginCheck(), (req, res, next) => {
     _id: req.params.id
   })
     .then(response => {
-      console.log('user: ', req.user)
-      console.log('userProfile: ', req.user._id.toString() === response[0]._id.toString())
+      console.log("user: ", req.user);
+      console.log(
+        "userProfile: ",
+        req.user._id.toString() === response[0]._id.toString()
+      );
       res.render("user-profile.hbs", {
         userProfile: response[0],
         user: req.user,
         loggedIn: req.user,
         showDelete: req.user._id.toString() === response[0]._id.toString(),
-        showFollow: req.user._id.toString() != response[0]._id.toString() &&
+        showFollow:
+          req.user._id.toString() != response[0]._id.toString() &&
           req.user.follow
             .map(value => {
               return value.id;
             })
             .indexOf(response[0]._id.toString()) === -1
       });
-
     })
     .catch(err => {
       console.log(err);
