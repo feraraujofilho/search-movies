@@ -27,10 +27,29 @@ router.get("/", (req, res, next) => {
 router.get("/community", loginCheck(), (req, res, next) => {
   User.find({})
     .then(document => {
-      console.log(document[0].seen);
+      const seens = document.map(x => x.seen).reduce((a, b) => a.concat(b));
+
+      const counters = seens.reduce((a, b) => {
+        if (a[b.title]) a[b.title] += 1;
+        else a[b.title] = 1;
+        return a;
+      }, {});
+
+      const result = Object.entries(counters)
+        .sort((a, b) => {
+          return b[1] - a[1];
+        })
+        .map(value => {
+          return value.slice(0, -1);
+        })
+        .slice(0, 5);
+      console.log(result);
+
+      console.log(document[1].seen);
       res.render("community.hbs", {
         people: document,
-        loggedIn: req.user
+        loggedIn: req.user,
+        bestMovies: result
       });
     })
     .catch(err => {

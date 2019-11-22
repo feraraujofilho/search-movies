@@ -1,24 +1,33 @@
+
+<div class="bigcom">
+  <h2 style="
+      color: white">Most watched</h3>
+    <div class="list-group">
+      <ol style="
+      color: red">
+
+      {{#each bestMovies}}
+      <li ><a class="pt-1" style="
+      color: red" href="http://www.netflix.com/search?q={{this}}">
+        {{this}}
+        </a></li>
+        {{/each}}
+      </ol>
+    </div>
+
+</div>
+
 <div class="bigcom">
 
-<h2 style="
+  <h2 style="
     color: white">Our Community</h2>
 
-<div class="list-group">
-{{#each people}}
-<div class="person list-group-item list-group-item-action">
-<h3>{{username}}</h3>
-<a href="/profile/{{_id}}">Visit Profile</a>
-</div>
-{{/each}}
-</div>
-</div>
-
-<h3>Best Movies</h3>
-<div class="list-group">
-  <ul>
-  {{#each bestMovies}}
-  <li class="person list-group-item list-group-item-action">{{this}}</li>
-  {{/each}}
-
-  </ul>
+  <div class="list-group">
+    {{#each people}}
+    <div class="person list-group-item list-group-item-action">
+      <h3>{{username}}</h3>
+      <a href="/profile/{{_id}}">Visit Profile</a>
+    </div>
+    {{/each}}
+  </div>
 </div>
