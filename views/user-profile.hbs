@@ -47,7 +47,8 @@
       <div class="card-body profile-header">
         <h4 class="card-title">{{userProfile.username}}'s profile</h4>
         {{#if showFollow}}
-        <button id="followbtn" onclick="follow('{{userProfile._id}}','{{userProfile.username}}')"> Follow Friend
+        <button id="followbtn" style="
+    background-color: white;" onclick="follow('{{userProfile._id}}','{{userProfile.username}}')"> Follow Friend
         </button>
         {{/if}}
       </div>
